@@ -51,14 +51,6 @@ h1, h2, h3, h4, h5 {
 
 section {
     padding: 60px 0;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-section.visible {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 /* HEADER Y NAVEGACIÓN */
@@ -70,6 +62,7 @@ header {
     top: 0;
     z-index: 1000;
     border-bottom: 2px solid var(--primary-blue);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .nav-container {
@@ -310,7 +303,7 @@ header {
 }
 
 /* ================================================ */
-/* CATÁLOGO CORREGIDO - IMÁGENES MÁS PEQUEÑAS */
+/* CATÁLOGO - 10 IMÁGENES */
 /* ================================================ */
 .catalog-section {
     background-color: var(--black);
@@ -434,8 +427,14 @@ header {
     border: 1px solid var(--accent-blue);
 }
 
-/* RESPONSIVE PARA CATÁLOGO */
-@media (min-width: 1200px) {
+/* RESPONSIVE PARA CATÁLOGO CON 10 IMÁGENES */
+@media (min-width: 1400px) {
+    .catalog-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1399px) {
     .catalog-grid {
         grid-template-columns: repeat(4, 1fr);
     }
@@ -479,24 +478,8 @@ header {
     background-color: var(--dark-blue);
 }
 
-/* FALLBACK PARA IMÁGENES QUE NO CARGAN */
-.product-img .img-placeholder {
-    width: 60px;
-    height: 60px;
-    opacity: 0.5;
-    filter: brightness(0.8);
-}
-
-.product-img .no-image {
-    color: var(--off-white);
-    font-size: 12px;
-    text-align: center;
-    padding: 15px;
-    font-style: italic;
-}
-
 /* ================================================ */
-/* FORMULARIO DE COTIZACIÓN */
+/* FORMULARIO DE COTIZACIÓN - CON ESTILOS DE MENSAJES */
 /* ================================================ */
 .quotation-section {
     background-color: var(--form-bg);
@@ -760,6 +743,42 @@ header {
     box-shadow: 0 6px 12px rgba(0, 102, 204, 0.4);
 }
 
+.submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* MENSAJE DEL FORMULARIO */
+.form-message {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 500;
+    display: none;
+}
+
+.form-message.success {
+    background-color: rgba(16, 185, 129, 0.2);
+    border: 1px solid #10b981;
+    color: #10b981;
+    display: block;
+}
+
+.form-message.error {
+    background-color: rgba(239, 68, 68, 0.2);
+    border: 1px solid #ef4444;
+    color: #ef4444;
+    display: block;
+}
+
+.form-message.info {
+    background-color: rgba(59, 130, 246, 0.2);
+    border: 1px solid #3b82f6;
+    color: #3b82f6;
+    display: block;
+}
+
 /* GALERÍA CON CARRUSEL */
 .gallery-section {
     background-color: var(--dark-gray);
@@ -803,13 +822,6 @@ header {
     background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
     color: var(--white);
     padding: 18px;
-}
-
-.carousel-caption h3 {
-    color: var(--white);
-    font-size: 17px;
-    margin-bottom: 5px;
-    font-weight: 600;
 }
 
 .carousel-caption p {
@@ -1085,6 +1097,23 @@ footer {
     opacity: 0.8;
 }
 
+/* INSTAGRAM LINK */
+.instagram-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent-blue);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: var(--transition);
+    margin-top: 10px;
+}
+
+.instagram-link:hover {
+    color: var(--white);
+}
+
 /* ANIMACIONES DE APARICIÓN */
 .fade-in {
     opacity: 0;
@@ -1095,6 +1124,66 @@ footer {
 .fade-in.visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* MENSAJES DE NOTIFICACIÓN */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 9999;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 400px;
+    animation: slideIn 0.3s ease;
+}
+
+.notification.success {
+    background: #10b981;
+    color: white;
+}
+
+.notification.error {
+    background: #ef4444;
+    color: white;
+}
+
+.notification.warning {
+    background: #f59e0b;
+    color: white;
+}
+
+.notification.info {
+    background: #3b82f6;
+    color: white;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
 }
 
 /* RESPONSIVE GENERAL */
@@ -1247,14 +1336,6 @@ textarea.form-control {
     min-height: 90px;
 }
 
-input:invalid, select:invalid, textarea:invalid {
-    border-color: #ff4757;
-}
-
-input:valid, select:valid, textarea:valid {
-    border-color: #2ed573;
-}
-
 /* Scroll personalizado */
 ::-webkit-scrollbar {
     width: 10px;
@@ -1308,56 +1389,4 @@ select.form-control:focus {
 .service-select option {
     background-color: var(--dark-blue) !important;
     color: var(--white) !important;
-}
-
-/* Estilo para selects de fecha y hora */
-input[type="date"].form-control,
-input[type="time"].form-control {
-    color: var(--white) !important;
-}
-
-/* Para navegadores Webkit (Chrome, Safari, Edge) */
-select.form-control::-webkit-scrollbar {
-    width: 8px;
-}
-
-select.form-control::-webkit-scrollbar-track {
-    background: var(--dark-gray);
-}
-
-select.form-control::-webkit-scrollbar-thumb {
-    background: var(--accent-blue);
-    border-radius: 4px;
-}
-
-/* Para Firefox */
-@supports (-moz-appearance:none) {
-    select.form-control option {
-        background-color: var(--dark-blue) !important;
-        color: var(--white) !important;
-    }
-    
-    select.form-control:focus option:checked {
-        background-color: var(--accent-blue) !important;
-    }
-}
-
-/* CORRECCIÓN FINAL PARA IMÁGENES QUE NO CARGAN */
-.product-img:has(img[src*="undefined"]),
-.product-img:has(img[src*="null"]),
-.product-img:has(img[src=""]) {
-    background: linear-gradient(45deg, var(--dark-blue), var(--primary-blue));
-}
-
-.product-img:has(img[src*="undefined"])::after,
-.product-img:has(img[src*="null"])::after,
-.product-img:has(img[src=""])::after {
-    content: "Imagen no disponible";
-    color: var(--off-white);
-    font-size: 12px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
 }
