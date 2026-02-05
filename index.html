@@ -17,8 +17,32 @@
                 <div class="logo-icon">
                     <i class="fas fa-snowflake"></i>
                 </div>
-                <div class="logo-text">Cool-Tech <span>Especializados en frio</span></div>
+                <div class="logo-text">Frost<span>Control</span></div>
             </a>
+            
+            <!-- Carrito de compras -->
+            <div class="carrito-container">
+                <a href="#cotizacion" class="carrito-icon" id="carritoIcon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="carrito-count" id="carritoCount">0</span>
+                </a>
+                <div class="carrito-dropdown" id="carritoDropdown">
+                    <div class="carrito-header">
+                        <h4>Tu Carrito</h4>
+                        <button class="close-carrito" id="closeCarrito">&times;</button>
+                    </div>
+                    <div class="carrito-items" id="carritoItems">
+                        <!-- Productos del carrito se añadirán aquí -->
+                    </div>
+                    <div class="carrito-footer">
+                        <div class="carrito-total">
+                            Total: <span id="carritoTotal">$0</span>
+                        </div>
+                        <button class="btn-vaciar-carrito" id="vaciarCarrito">Vaciar Carrito</button>
+                        <button class="btn-comprar-carrito" id="comprarCarrito">Comprar Todo</button>
+                    </div>
+                </div>
+            </div>
             
             <button class="mobile-menu-btn" id="mobileMenuBtn">
                 <i class="fas fa-bars"></i>
@@ -91,7 +115,7 @@
         </div>
     </section>
 
-    <!-- Sección Catálogo (10 productos) -->
+    <!-- Sección Catálogo (20 productos) -->
     <section class="catalog-section" id="catalogo">
         <div class="container">
             <div class="section-title">
@@ -102,399 +126,597 @@
             <div class="catalog-grid">
                 <!-- PRODUCTO 1 -->
                 <div class="product-card fade-in">
-                    <div class="product-img">
+                    <div class="product-img" data-id="1" data-nombre="Aire LG Inverter" data-precio="49000">
                         <span class="image-badge">Nuevo</span>
-                        <img src="img/producto1.jpg" alt="Nevera Comercial 2 Puertas" class="local-image" onerror="this.onerror=null; this.src='https://placehold.co/300x200/001a33/0066cc?text=Nevera+Comercial';">
+                        <img src="img\img.1.jfif" alt="Aire acondicionado LG" class="local-image">
+                        <div class="quick-buy-overlay">
+                            <button class="quick-buy-btn" data-id="1" data-nombre="Aire LG Inverter" data-precio="49000">
+                                <i class="fas fa-bolt"></i> COMPRAR AHORA
+                            </button>
+                        </div>
                     </div>
                     <div class="product-info">
-                        <h3>Nevera Comercial 2 Puertas</h3>
-                        <p>Ideal para restaurantes y comercios. Capacidad de 500L, temperatura ajustable, eficiencia energética A+.</p>
-                        <div class="product-price">$1,850 <span>Incluye instalación</span></div>
+                        <h3>Aire acondicionado split inverter LG art cool</h3>
+                        <p>Tecnologia inverter dual - Wifi smart - Filtro purificador de aire - Diseño elegante</p>
+                        <div class="product-price">$49,000<span>5 años de garantia</span></div>
+                        <div class="product-actions">
+                            <button class="btn-carrito" data-id="1" data-nombre="Aire LG Inverter" data-precio="49000">
+                                <i class="fas fa-cart-plus"></i> Agregar
+                            </button>
+                        </div>
                     </div>
                 </div>
                 
                 <!-- PRODUCTO 2 -->
                 <div class="product-card fade-in">
-                    <div class="product-img">
-                        <img src="img/producto2.jpg" alt="Sistema de Frío Industrial" class="local-image" onerror="this.onerror=null; this.src='https://placehold.co/300x200/001a33/0066cc?text=Sistema+Industrial';">
+                    <div class="product-img" data-id="2" data-nombre="Extractor de aire doméstico" data-precio="1750">
+                        <img src="img\img.2.jfif" alt="Extractor de aire" class="local-image">
+                        <div class="quick-buy-overlay">
+                            <button class="quick-buy-btn" data-id="2" data-nombre="Extractor de aire doméstico" data-precio="1750">
+                                <i class="fas fa-bolt"></i> COMPRAR AHORA
+                            </button>
+                        </div>
                     </div>
                     <div class="product-info">
-                        <h3>Sistema de Frío Industrial</h3>
-                        <p>Para cámaras frigoríficas de hasta 50m³. Control digital, compresor semi-hermético, bajo consumo.</p>
-                        <div class="product-price">$4,200 <span>Garantía 2 años</span></div>
+                        <h3>Extractor de aire doméstico</h3>
+                        <p>Elimina humedad y mal olores - Alta eficiencia - Fácil instalación</p>
+                        <div class="product-price">$1,750<span>Garantía 3 años</span></div>
+                        <div class="product-actions">
+                            <button class="btn-carrito" data-id="2" data-nombre="Extractor de aire doméstico" data-precio="1750">
+                                <i class="fas fa-cart-plus"></i> Agregar
+                            </button>
+                        </div>
                     </div>
                 </div>
                 
                 <!-- PRODUCTO 3 -->
                 <div class="product-card fade-in">
-                    <div class="product-img">
-                        <img src="img/producto3.jpg" alt="Vitrina Refrigerada" class="local-image" onerror="this.onerror=null; this.src='https://placehold.co/300x200/001a33/0066cc?text=Vitrina+Refrigerada';">
+                    <div class="product-img" data-id="3" data-nombre="Aire portátil Fresh-Breeze" data-precio="28900">
+                        <img src="img\img.3.jfif" alt="Aire portátil" class="local-image">
+                        <div class="quick-buy-overlay">
+                            <button class="quick-buy-btn" data-id="3" data-nombre="Aire portátil Fresh-Breeze" data-precio="28900">
+                                <i class="fas fa-bolt"></i> COMPRAR AHORA
+                            </button>
+                        </div>
                     </div>
                     <div class="product-info">
-                        <h3>Vitrina Refrigerada</h3>
-                        <p>Exhibidora de productos con iluminación LED. 3 metros lineales, puertas de vidrio templado.</p>
-                        <div class="product-price">$2,750 <span>Entrega en 7 días</span></div>
+                        <h3>Aire acondicionado portátil "Fresh-Breeze"</h3>
+                        <p>Control remoto - Sistema de filtro - Alto rendimiento - Portátil</p>
+                        <div class="product-price">$28,900<span>Garantia de 1 año</span></div>
+                        <div class="product-actions">
+                            <button class="btn-carrito" data-id="3" data-nombre="Aire portátil Fresh-Breeze" data-precio="28900">
+                                <i class="fas fa-cart-plus"></i> Agregar
+                            </button>
+                        </div>
                     </div>
                 </div>
                 
                 <!-- PRODUCTO 4 -->
                 <div class="product-card fade-in">
-                    <div class="product-img">
-                        <img src="img/producto4.jpg" alt="Aire Acondicionado 24,000 BTU" class="local-image" onerror="this.onerror=null; this.src='https://placehold.co/300x200/001a33/0066cc?text=Aire+24000BTU';">
+                    <div class="product-img" data-id="4" data-nombre="Freezer horizontal 15 pies" data-precio="28900">
+                        <img src="img\img.4.jfif" alt="Freezer horizontal" class="local-image">
+                        <div class="quick-buy-overlay">
+                            <button class="quick-buy-btn" data-id="4" data-nombre="Freezer horizontal 15 pies" data-precio="28900">
+                                <i class="fas fa-bolt"></i> COMPRAR AHORA
+                            </button>
+                        </div>
                     </div>
                     <div class="product-info">
-                        <h3>Aire Acondicionado 24,000 BTU</h3>
-                        <p>Sistema inverter, control wifi, filtro antipolvo. Ideal para locales comerciales medianos.</p>
-                        <div class="product-price">$850 <span>Instalación incluida</span></div>
+                        <h3>Freezer horizontal 15 pies cúbicos</h3>
+                        <p>Capacidad 15 pies - Congelado rápido - Interior aluminio - Cerradura con llave</p>
+                        <div class="product-price">$28,900<span>Garantia de 2 años</span></div>
+                        <div class="product-actions">
+                            <button class="btn-carrito" data-id="4" data-nombre="Freezer horizontal 15 pies" data-precio="28900">
+                                <i class="fas fa-cart-plus"></i> Agregar
+                            </button>
+                        </div>
                     </div>
                 </div>
                 
                 <!-- PRODUCTO 5 -->
                 <div class="product-card fade-in">
-                    <div class="product-img">
+                    <div class="product-img" data-id="5" data-nombre="Vitrina refrigerada SweetView" data-precio="95500">
                         <span class="image-badge">Oferta</span>
-                        <img src="img/producto5.jpg" alt="Congelador Vertical Industrial" class="local-image" onerror="this.onerror=null; this.src='https://placehold.co/300x200/001a33/0066cc?text=Congelador+Industrial';">
+                        <img src="img\img.5.jfif" alt="Vitrina refrigerada" class="local-image">
+                        <div class="quick-buy-overlay">
+                            <button class="quick-buy-btn" data-id="5" data-nombre="Vitrina refrigerada SweetView" data-precio="95500">
+                                <i class="fas fa-bolt"></i> COMPRAR AHORA
+                            </button>
+                        </div>
                     </div>
                     <div class="product-info">
-                        <h3>Congelador Vertical Industrial</h3>
-                        <p>Capacidad 800L, sistema No Frost, 6 bandejas, temperatura hasta -25°C, eficiencia energética A++.</p>
-                        <div class="product-price">$3,200 <span>Garantía 3 años</span></div>
+                        <h3>Vitrina refrigerada "SweetView"</h3>
+                        <p>Diseño panorámico - Alto rendimiento - 100% garantizado - Exhibición perfecta</p>
+                        <div class="product-price">$95,500<span>Garantía 3 años</span></div>
+                        <div class="product-actions">
+                            <button class="btn-carrito" data-id="5" data-nombre="Vitrina refrigerada SweetView" data-precio="95500">
+                                <i class="fas fa-cart-plus"></i> Agregar
+                            </button>
+                        </div>
                     </div>
                 </div>
                 
                 <!-- PRODUCTO 6 -->
                 <div class="product-card fade-in">
-                    <div class="product-img">
-                        <img src="img/producto6.jpg" alt="Máquina de Hielo Industrial" class="local-image" onerror="this.onerror=null; this.src='https://placehold.co/300x200/001a33/0066cc?text=Máquina+Hielo';">
+                    <div class="product-img" data-id="6" data-nombre="Condensadora PowerCool Pro" data-precio="175000">
+                        <img src="img\img.6.jfif" alt="Condensadora industrial" class="local-image">
+                        <div class="quick-buy-overlay">
+                            <button class="quick-buy-btn" data-id="6" data-nombre="Condensadora PowerCool Pro" data-precio="175000">
+                                <i class="fas fa-bolt"></i> COMPRAR AHORA
+                            </button>
+                        </div>
                     </div>
                     <div class="product-info">
-                        <h3>Máquina de Hielo Industrial</h3>
-                        <p>Producción de 100kg de hielo por día, sistema automático de limpieza, bajo consumo eléctrico.</p>
-                        <div class="product-price">$4,800 <span>Capacidad industrial</span></div>
+                        <h3>Unidad condensadora industrial "PowerCool Pro"</h3>
+                        <p>120,000 BTU/h - Tecnología scroll - Microcanal - Alta eficiencia industrial</p>
+                        <div class="product-price">$175,000<span>Garantia de 3 años</span></div>
+                        <div class="product-actions">
+                            <button class="btn-carrito" data-id="6" data-nombre="Condensadora PowerCool Pro" data-precio="175000">
+                                <i class="fas fa-cart-plus"></i> Agregar
+                            </button>
+                        </div>
                     </div>
                 </div>
                 
                 <!-- PRODUCTO 7 -->
                 <div class="product-card fade-in">
-                    <div class="product-img">
-                        <img src="img/producto7.jpg" alt="Aire Acondicionado TGM" class="local-image" onerror="this.onerror=null; this.src='https://placehold.co/300x200/001a33/0066cc?text=Aire+TGM';">
+                    <div class="product-img" data-id="7" data-nombre="Compresor EcoPower Pro" data-precio="98800">
+                        <img src="img\img.7.jfif" alt="Compresor rotativo" class="local-image">
+                        <div class="quick-buy-overlay">
+                            <button class="quick-buy-btn" data-id="7" data-nombre="Compresor EcoPower Pro" data-precio="98800">
+                                <i class="fas fa-bolt"></i> COMPRAR AHORA
+                            </button>
+                        </div>
                     </div>
                     <div class="product-info">
-                        <h3>Aire Acondicionado TGM 18,000 BTU</h3>
-                        <p>Sistema inverter, control wifi, bajo consumo energético, ideal para oficinas y locales.</p>
-                        <div class="product-price">$750 <span>Eficiencia A+</span></div>
+                        <h3>Compresor rotativo "EcoPower pro"</h3>
+                        <p>12,000 BTU/h - Tecnología inverter - Gas R-410A - Alta eficiencia energética</p>
+                        <div class="product-price">$98,800<span>Garantia de 5 años</span></div>
+                        <div class="product-actions">
+                            <button class="btn-carrito" data-id="7" data-nombre="Compresor EcoPower Pro" data-precio="98800">
+                                <i class="fas fa-cart-plus"></i> Agregar
+                            </button>
+                        </div>
                     </div>
                 </div>
                 
                 <!-- PRODUCTO 8 -->
                 <div class="product-card fade-in">
-                    <div class="product-img">
-                        <img src="img/producto8.jpg" alt="Aire Acondicionado Airway" class="local-image" onerror="this.onerror=null; this.src='https://placehold.co/300x200/001a33/0066cc?text=Aire+Airway';">
+                    <div class="product-img" data-id="8" data-nombre="Congelador Polarflow" data-precio="450000">
+                        <img src="img\img.8.jfif" alt="Congelador industrial" class="local-image">
+                        <div class="quick-buy-overlay">
+                            <button class="quick-buy-btn" data-id="8" data-nombre="Congelador Polarflow" data-precio="450000">
+                                <i class="fas fa-bolt"></i> COMPRAR AHORA
+                            </button>
+                        </div>
                     </div>
                     <div class="product-info">
-                        <h3>Aire Acondicionado Airway 9,000 BTU</h3>
-                        <p>Compacto y eficiente, ideal para espacios pequeños, bajo consumo, fácil instalación.</p>
-                        <div class="product-price">$450 <span>Para hogar/oficina</span></div>
+                        <h3>Congelador "Polarflow" industrial</h3>
+                        <p>Producción 500 L/h - Alta eficiencia - Para oficina o hogar - Construcción robusta</p>
+                        <div class="product-price">$450,000<span>Garantia de 2 años</span></div>
+                        <div class="product-actions">
+                            <button class="btn-carrito" data-id="8" data-nombre="Congelador Polarflow" data-precio="450000">
+                                <i class="fas fa-cart-plus"></i> Agregar
+                            </button>
+                        </div>
                     </div>
                 </div>
                 
                 <!-- PRODUCTO 9 -->
                 <div class="product-card fade-in">
-                    <div class="product-img">
+                    <div class="product-img" data-id="9" data-nombre="Máquina de helado suave" data-precio="550000">
                         <span class="image-badge">Popular</span>
-                        <img src="img/producto9.jpg" alt="Cámara Frigorífica" class="local-image" onerror="this.onerror=null; this.src='https://placehold.co/300x200/001a33/0066cc?text=Cámara+Frigorífica';">
+                        <img src="img\img.9.jfif" alt="Máquina de helado" class="local-image">
+                        <div class="quick-buy-overlay">
+                            <button class="quick-buy-btn" data-id="9" data-nombre="Máquina de helado suave" data-precio="550000">
+                                <i class="fas fa-bolt"></i> COMPRAR AHORA
+                            </button>
+                        </div>
                     </div>
                     <div class="product-info">
-                        <h3>Cámara Frigorífica 20m³</h3>
-                        <p>Para almacenamiento de alimentos, temperatura controlada, sistema de seguridad integrado.</p>
-                        <div class="product-price">$5,500 <span>Instalación incluida</span></div>
+                        <h3>Máquina de helado suave de mostrador</h3>
+                        <p>2 Sabores + Mixto - Sistema autolimpieza - Eficiencia 100% - Uso comercial</p>
+                        <div class="product-price">$550,000<span>Garantia de 1 año</span></div>
+                        <div class="product-actions">
+                            <button class="btn-carrito" data-id="9" data-nombre="Máquina de helado suave" data-precio="550000">
+                                <i class="fas fa-cart-plus"></i> Agregar
+                            </button>
+                        </div>
                     </div>
                 </div>
                 
-  <!-- PRODUCTO 9 -->
-                <div class="product-card fade-in">
-                    <div class="product-img">
-                        <span class="image-badge">Popular</span>
-                        <img src="img/producto9.jpg" alt="Cámara Frigorífica" class="local-image" onerror="this.onerror=null; this.src='https://placehold.co/300x200/001a33/0066cc?text=Cámara+Frigorífica';">
-                    </div>
-                    <div class="product-info">
-                        <h3>Cámara Frigorífica 20m³</h3>
-                        <p>Para almacenamiento de alimentos, temperatura controlada, sistema de seguridad integrado.</p>
-                        <div class="product-price">$5,500 <span>Instalación incluida</span></div>
-                    </div>
-                </div>
-                
-
-                  <!-- PRODUCTO 9 -->
-                <div class="product-card fade-in">
-                    <div class="product-img">
-                        <span class="image-badge">Popular</span>
-                        <img src="img/producto9.jpg" alt="Cámara Frigorífica" class="local-image" onerror="this.onerror=null; this.src='https://placehold.co/300x200/001a33/0066cc?text=Cámara+Frigorífica';">
-                    </div>
-                    <div class="product-info">
-                        <h3>Cámara Frigorífica 20m³</h3>
-                        <p>Para almacenamiento de alimentos, temperatura controlada, sistema de seguridad integrado.</p>
-                        <div class="product-price">$5,500 <span>Instalación incluida</span></div>
-                    </div>
-                </div>
-                
-
-                  <!-- PRODUCTO 9 -->
-                <div class="product-card fade-in">
-                    <div class="product-img">
-                        <span class="image-badge">Popular</span>
-                        <img src="img/producto9.jpg" alt="Cámara Frigorífica" class="local-image" onerror="this.onerror=null; this.src='https://placehold.co/300x200/001a33/0066cc?text=Cámara+Frigorífica';">
-                    </div>
-                    <div class="product-info">
-                        <h3>Cámara Frigorífica 20m³</h3>
-                        <p>Para almacenamiento de alimentos, temperatura controlada, sistema de seguridad integrado.</p>
-                        <div class="product-price">$5,500 <span>Instalación incluida</span></div>
-                    </div>
-                </div>
-                
-
-                  <!-- PRODUCTO 9 -->
-                <div class="product-card fade-in">
-                    <div class="product-img">
-                        <span class="image-badge">Popular</span>
-                        <img src="img/producto9.jpg" alt="Cámara Frigorífica" class="local-image" onerror="this.onerror=null; this.src='https://placehold.co/300x200/001a33/0066cc?text=Cámara+Frigorífica';">
-                    </div>
-                    <div class="product-info">
-                        <h3>Cámara Frigorífica 20m³</h3>
-                        <p>Para almacenamiento de alimentos, temperatura controlada, sistema de seguridad integrado.</p>
-                        <div class="product-price">$5,500 <span>Instalación incluida</span></div>
-                    </div>
-                </div>
-                
-
-                  <!-- PRODUCTO 9 -->
-                <div class="product-card fade-in">
-                    <div class="product-img">
-                        <span class="image-badge">Popular</span>
-                        <img src="img/producto9.jpg" alt="Cámara Frigorífica" class="local-image" onerror="this.onerror=null; this.src='https://placehold.co/300x200/001a33/0066cc?text=Cámara+Frigorífica';">
-                    </div>
-                    <div class="product-info">
-                        <h3>Cámara Frigorífica 20m³</h3>
-                        <p>Para almacenamiento de alimentos, temperatura controlada, sistema de seguridad integrado.</p>
-                        <div class="product-price">$5,500 <span>Instalación incluida</span></div>
-                    </div>
-                </div>
-                
-
-                  <!-- PRODUCTO 9 -->
-                <div class="product-card fade-in">
-                    <div class="product-img">
-                        <span class="image-badge">Popular</span>
-                        <img src="img/producto9.jpg" alt="Cámara Frigorífica" class="local-image" onerror="this.onerror=null; this.src='https://placehold.co/300x200/001a33/0066cc?text=Cámara+Frigorífica';">
-                    </div>
-                    <div class="product-info">
-                        <h3>Cámara Frigorífica 20m³</h3>
-                        <p>Para almacenamiento de alimentos, temperatura controlada, sistema de seguridad integrado.</p>
-                        <div class="product-price">$5,500 <span>Instalación incluida</span></div>
-                    </div>
-                </div>
-                
-
-                  <!-- PRODUCTO 9 -->
-                <div class="product-card fade-in">
-                    <div class="product-img">
-                        <span class="image-badge">Popular</span>
-                        <img src="img/producto9.jpg" alt="Cámara Frigorífica" class="local-image" onerror="this.onerror=null; this.src='https://placehold.co/300x200/001a33/0066cc?text=Cámara+Frigorífica';">
-                    </div>
-                    <div class="product-info">
-                        <h3>Cámara Frigorífica 20m³</h3>
-                        <p>Para almacenamiento de alimentos, temperatura controlada, sistema de seguridad integrado.</p>
-                        <div class="product-price">$5,500 <span>Instalación incluida</span></div>
-                    </div>
-                </div>
-                
-
-                  <!-- PRODUCTO 9 -->
-                <div class="product-card fade-in">
-                    <div class="product-img">
-                        <span class="image-badge">Popular</span>
-                        <img src="img/producto9.jpg" alt="Cámara Frigorífica" class="local-image" onerror="this.onerror=null; this.src='https://placehold.co/300x200/001a33/0066cc?text=Cámara+Frigorífica';">
-                    </div>
-                    <div class="product-info">
-                        <h3>Cámara Frigorífica 20m³</h3>
-                        <p>Para almacenamiento de alimentos, temperatura controlada, sistema de seguridad integrado.</p>
-                        <div class="product-price">$5,500 <span>Instalación incluida</span></div>
-                    </div>
-                </div>
-                
-
-                  <!-- PRODUCTO 9 -->
-                <div class="product-card fade-in">
-                    <div class="product-img">
-                        <span class="image-badge">Popular</span>
-                        <img src="img/producto9.jpg" alt="Cámara Frigorífica" class="local-image" onerror="this.onerror=null; this.src='https://placehold.co/300x200/001a33/0066cc?text=Cámara+Frigorífica';">
-                    </div>
-                    <div class="product-info">
-                        <h3>Cámara Frigorífica 20m³</h3>
-                        <p>Para almacenamiento de alimentos, temperatura controlada, sistema de seguridad integrado.</p>
-                        <div class="product-price">$5,500 <span>Instalación incluida</span></div>
-                    </div>
-                </div>
-                
-
-                  <!-- PRODUCTO 9 -->
-                <div class="product-card fade-in">
-                    <div class="product-img">
-                        <span class="image-badge">Popular</span>
-                        <img src="img/producto9.jpg" alt="Cámara Frigorífica" class="local-image" onerror="this.onerror=null; this.src='https://placehold.co/300x200/001a33/0066cc?text=Cámara+Frigorífica';">
-                    </div>
-                    <div class="product-info">
-                        <h3>Cámara Frigorífica 20m³</h3>
-                        <p>Para almacenamiento de alimentos, temperatura controlada, sistema de seguridad integrado.</p>
-                        <div class="product-price">$5,500 <span>Instalación incluida</span></div>
-                    </div>
-                </div>
-                
-
                 <!-- PRODUCTO 10 -->
                 <div class="product-card fade-in">
-                    <div class="product-img">
-                        <img src="img/producto10.jpg" alt="Nevera Exhibidora" class="local-image" onerror="this.onerror=null; this.src='https://placehold.co/300x200/001a33/0066cc?text=Nevera+Exhibidora';">
+                    <div class="product-img" data-id="10" data-nombre="Abatidor Gelastef -40°C" data-precio="120000">
+                        <img src="img\img.10.jfif" alt="Abatidor de temperatura" class="local-image">
+                        <div class="quick-buy-overlay">
+                            <button class="quick-buy-btn" data-id="10" data-nombre="Abatidor Gelastef -40°C" data-precio="120000">
+                                <i class="fas fa-bolt"></i> COMPRAR AHORA
+                            </button>
+                        </div>
                     </div>
                     <div class="product-info">
-                        <h3>Nevera Exhibidora 4 Puertas</h3>
-                        <p>Para supermercados y tiendas, iluminación LED, sistema anti-escarcha, bajo consumo.</p>
-                        <div class="product-price">$3,800 <span>Garantía 2 años</span></div>
+                        <h3>Abatidor de ultra congelación "Gelastef"</h3>
+                        <p>Capacidad 12 bandejas - -40°C en 30 min - Acero inoxidable - Profesional</p>
+                        <div class="product-price">$120,000<span>Garantía 2 años</span></div>
+                        <div class="product-actions">
+                            <button class="btn-carrito" data-id="10" data-nombre="Abatidor Gelastef -40°C" data-precio="120000">
+                                <i class="fas fa-cart-plus"></i> Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- PRODUCTO 11 -->
+                <div class="product-card fade-in">
+                    <div class="product-img" data-id="11" data-nombre="Máquina Fruty-Pops" data-precio="78000">
+                        <img src="img\img.11.jfif" alt="Máquina de paletas" class="local-image">
+                        <div class="quick-buy-overlay">
+                            <button class="quick-buy-btn" data-id="11" data-nombre="Máquina Fruty-Pops" data-precio="78000">
+                                <i class="fas fa-bolt"></i> COMPRAR AHORA
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Máquina de paletas "Fruty-Pops"</h3>
+                        <p>Heladera profesional - Temperatura regulable - 10 paletas/h - 100% eficiente</p>
+                        <div class="product-price">$78,000<span>Garantia de 2 años</span></div>
+                        <div class="product-actions">
+                            <button class="btn-carrito" data-id="11" data-nombre="Máquina Fruty-Pops" data-precio="78000">
+                                <i class="fas fa-cart-plus"></i> Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- PRODUCTO 12 -->
+                <div class="product-card fade-in">
+                    <div class="product-img" data-id="12" data-nombre="Vitrina pastelería Climanow" data-precio="19000">
+                        <span class="image-badge">Nuevo</span>
+                        <img src="img\img.12.jfif" alt="Vitrina de pastelería" class="local-image">
+                        <div class="quick-buy-overlay">
+                            <button class="quick-buy-btn" data-id="12" data-nombre="Vitrina pastelería Climanow" data-precio="19000">
+                                <i class="fas fa-bolt"></i> COMPRAR AHORA
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Vitrina de pastelería "Climanow"</h3>
+                        <p>Cristal curvo - Control de humedad - LED calidad - Control remoto - Fácil mover</p>
+                        <div class="product-price">$19,000<span>Garantia de 1 año</span></div>
+                        <div class="product-actions">
+                            <button class="btn-carrito" data-id="12" data-nombre="Vitrina pastelería Climanow" data-precio="19000">
+                                <i class="fas fa-cart-plus"></i> Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- PRODUCTO 13 -->
+                <div class="product-card fade-in">
+                    <div class="product-img" data-id="13" data-nombre="Máquina de hielo Articflow" data-precio="25990">
+                        <img src="img\img.13.jfif" alt="Máquina de hielo" class="local-image">
+                        <div class="quick-buy-overlay">
+                            <button class="quick-buy-btn" data-id="13" data-nombre="Máquina de hielo Articflow" data-precio="25990">
+                                <i class="fas fa-bolt"></i> COMPRAR AHORA
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Máquina de hielo industrial "Articflow"</h3>
+                        <p>Producción 500 Lbs/día - Distribución uniforme - Acero inox - Para bares/cafetería</p>
+                        <div class="product-price">$25,990<span>Garantia de 3 años</span></div>
+                        <div class="product-actions">
+                            <button class="btn-carrito" data-id="13" data-nombre="Máquina de hielo Articflow" data-precio="25990">
+                                <i class="fas fa-cart-plus"></i> Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- PRODUCTO 14 -->
+                <div class="product-card fade-in">
+                    <div class="product-img" data-id="14" data-nombre="Mini-split EcoComfort" data-precio="78000">
+                        <img src="img\img.14.jfif" alt="Mini-split" class="local-image">
+                        <div class="quick-buy-overlay">
+                            <button class="quick-buy-btn" data-id="14" data-nombre="Mini-split EcoComfort" data-precio="78000">
+                                <i class="fas fa-bolt"></i> COMPRAR AHORA
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Sistema mini-split "EcoComfort"</h3>
+                        <p>Tecnología inverter - Filtro purificador - Funcionamiento ultra silencioso - Eficiente</p>
+                        <div class="product-price">$78,000<span>Garantia de 2 años</span></div>
+                        <div class="product-actions">
+                            <button class="btn-carrito" data-id="14" data-nombre="Mini-split EcoComfort" data-precio="78000">
+                                <i class="fas fa-cart-plus"></i> Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- PRODUCTO 15 -->
+                <div class="product-card fade-in">
+                    <div class="product-img" data-id="15" data-nombre="Mantenedor GelatoPro" data-precio="145000">
+                        <span class="image-badge">Oferta</span>
+                        <img src="img\img.15.jfif" alt="Mantenedor de helado" class="local-image">
+                        <div class="quick-buy-overlay">
+                            <button class="quick-buy-btn" data-id="15" data-nombre="Mantenedor GelatoPro" data-precio="145000">
+                                <i class="fas fa-bolt"></i> COMPRAR AHORA
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Mantenedor de helado "GelatoPro"</h3>
+                        <p>Capacidad 10 litros - Congelación ultra rápida - Panel digital - Profesional</p>
+                        <div class="product-price">$145,000<span>Garantia de 3 años</span></div>
+                        <div class="product-actions">
+                            <button class="btn-carrito" data-id="15" data-nombre="Mantenedor GelatoPro" data-precio="145000">
+                                <i class="fas fa-cart-plus"></i> Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- PRODUCTO 16 -->
+                <div class="product-card fade-in">
+                    <div class="product-img" data-id="16" data-nombre="Heladora CreamyFlavor" data-precio="125000">
+                        <img src="img\img.16.jfif" alt="Heladora soft" class="local-image">
+                        <div class="quick-buy-overlay">
+                            <button class="quick-buy-btn" data-id="16" data-nombre="Heladora CreamyFlavor" data-precio="125000">
+                                <i class="fas fa-bolt"></i> COMPRAR AHORA
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Heladora soft "CreamyFlavor"</h3>
+                        <p>2 sabores + Mixto - Auto-limpieza - Bomba de aire integrada - Industrial</p>
+                        <div class="product-price">$125,000<span>Garantia de 2 años</span></div>
+                        <div class="product-actions">
+                            <button class="btn-carrito" data-id="16" data-nombre="Heladora CreamyFlavor" data-precio="125000">
+                                <i class="fas fa-cart-plus"></i> Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- PRODUCTO 17 -->
+                <div class="product-card fade-in">
+                    <div class="product-img" data-id="17" data-nombre="Nevera industrial" data-precio="38500">
+                        <img src="img\img.17.jfif" alt="Nevera industrial" class="local-image">
+                        <div class="quick-buy-overlay">
+                            <button class="quick-buy-btn" data-id="17" data-nombre="Nevera industrial" data-precio="38500">
+                                <i class="fas fa-bolt"></i> COMPRAR AHORA
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Nevera industrial 5.5 pies</h3>
+                        <p>5.5 pies cúbicos - Acero inoxidable - Alto rendimiento - Control digital con alarma</p>
+                        <div class="product-price">$38,500<span>Garantia de 2 años</span></div>
+                        <div class="product-actions">
+                            <button class="btn-carrito" data-id="17" data-nombre="Nevera industrial" data-precio="38500">
+                                <i class="fas fa-cart-plus"></i> Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- PRODUCTO 18 -->
+                <div class="product-card fade-in">
+                    <div class="product-img" data-id="18" data-nombre="Mantenedora artesanal" data-precio="120000">
+                        <span class="image-badge">Nuevo</span>
+                        <img src="img\img.18.jfif" alt="Mantenedora" class="local-image">
+                        <div class="quick-buy-overlay">
+                            <button class="quick-buy-btn" data-id="18" data-nombre="Mantenedora artesanal" data-precio="120000">
+                                <i class="fas fa-bolt"></i> COMPRAR AHORA
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Mantenedora artesanal profesional</h3>
+                        <p>Ciclo automático inteligente - Enfriamiento rápido - Compresor alto rendimiento</p>
+                        <div class="product-price">$120,000<span>Garantia de 3 años</span></div>
+                        <div class="product-actions">
+                            <button class="btn-carrito" data-id="18" data-nombre="Mantenedora artesanal" data-precio="120000">
+                                <i class="fas fa-cart-plus"></i> Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- PRODUCTO 19 -->
+                <div class="product-card fade-in">
+                    <div class="product-img" data-id="19" data-nombre="Heladora suave 300 conos" data-precio="120000">
+                        <img src="img\img.19.jfif" alt="Heladora suave" class="local-image">
+                        <div class="quick-buy-overlay">
+                            <button class="quick-buy-btn" data-id="19" data-nombre="Heladora suave 300 conos" data-precio="120000">
+                                <i class="fas fa-bolt"></i> COMPRAR AHORA
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Heladora suave 300 conos</h3>
+                        <p>Sabor clásico - 300 conos capacidad - Enfriamiento rápido - Servidores digitales</p>
+                        <div class="product-price">$120,000<span>Garantia de 2 años</span></div>
+                        <div class="product-actions">
+                            <button class="btn-carrito" data-id="19" data-nombre="Heladora suave 300 conos" data-precio="120000">
+                                <i class="fas fa-cart-plus"></i> Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- PRODUCTO 20 -->
+                <div class="product-card fade-in">
+                    <div class="product-img" data-id="20" data-nombre="Vitrina vertical exhibidora" data-precio="2750">
+                        <span class="image-badge">Popular</span>
+                        <img src="img\img.20.jfif" alt="Vitrina vertical" class="local-image">
+                        <div class="quick-buy-overlay">
+                            <button class="quick-buy-btn" data-id="20" data-nombre="Vitrina vertical exhibidora" data-precio="2750">
+                                <i class="fas fa-bolt"></i> COMPRAR AHORA
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Vitrina Exhibidora vertical</h3>
+                        <p>Doble cristal panorámico - LED calidad - Temperatura ajustable - Frio uniforme</p>
+                        <div class="product-price">$2,750<span>Garantia de 2 años</span></div>
+                        <div class="product-actions">
+                            <button class="btn-carrito" data-id="20" data-nombre="Vitrina vertical exhibidora" data-precio="2750">
+                                <i class="fas fa-cart-plus"></i> Agregar
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Sección Cotización -->
+    <!-- Sección Cotización (formulario compacto) -->
     <section class="quotation-section" id="cotizacion">
         <div class="container">
             <div class="section-title">
                 <h2>Solicitar Cotización</h2>
-                <p>Complete el formulario para obtener una cotización personalizada de nuestros servicios</p>
+                <p>Complete el formulario para obtener una cotización personalizada</p>
             </div>
             
-            <form class="quotation-form" id="quotationForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="Nombre">Nombre *</label>
-                        <input type="text" id="Nombre" class="form-control" required>
-                    </div>
+            <div class="formulario-compacto">
+                <form class="quotation-form" id="quotationForm">
+                    <!-- Campo oculto para tipo de solicitud -->
+                    <input type="hidden" id="tipo_solicitud" name="tipo_solicitud" value="servicio">
                     
-                    <div class="form-group">
-                        <label for="Apellido">Apellido *</label>
-                        <input type="text" id="Apellido" class="form-control" required>
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="Telefono">Teléfono *</label>
-                        <input type="tel" id="Telefono" class="form-control" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="Direccion">Dirección *</label>
-                        <input type="text" id="Direccion" class="form-control" required>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="Tipo_Servicio">Tipo de Servicio *</label>
-                    <div class="service-select-container">
-                        <select id="Tipo_Servicio" class="form-control service-select" required>
-                            <option value="">Seleccione un servicio</option>
-                            <option value="Mantenimiento" data-price="120">Mantenimiento - $3,500 RD</option>
-                            <option value="Instalacion" data-price="350">Instalación - $2,500 RD</option>
-                            <option value="Reparacion" data-price="250">Reparación - $ DEPENDE</option>
-                            <option value="Venta" data-price="0">Venta de Equipo - Consultar precio</option>
-                        </select>
-                    </div>
-                    <div id="servicePriceDisplay" class="service-price-display">
-                        Precio del servicio: <span id="selectedServicePrice">$0</span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="Descripcion_o_Equipo_a_comprar">Descripción del problema o equipo a comprar <span class="text-danger">*</span></label>
-                    <textarea id="Descripcion_o_Equipo_a_comprar" class="form-control" rows="3" 
-                            placeholder="Describa el problema o el servicio que necesita..."
-                            required></textarea>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="Dia_Disponible">Día disponible para la visita *</label>
-                        <select id="Dia_Disponible" class="form-control service-select" required>
-                            <option value="">Seleccione un día</option>
-                            <option value="Lunes">Lunes</option>
-                            <option value="Martes">Martes</option>
-                            <option value="Miercoles">Miércoles</option>
-                            <option value="Jueves">Jueves</option>
-                            <option value="Viernes">Viernes</option>
-                            <option value="Sabado">Sábado</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="Hora_Disponible">Hora disponible para la visita *</label>
-                        <select id="Hora_Disponible" class="form-control service-select" required>
-                            <option value="">Seleccione una hora</option>
-                            <option value="8:00 AM">8:00 AM</option>
-                            <option value="9:00 AM">9:00 AM</option>
-                            <option value="10:00 AM">10:00 AM</option>
-                            <option value="11:00 AM">11:00 AM</option>
-                            <option value="2:00 PM">2:00 PM</option>
-                            <option value="3:00 PM">3:00 PM</option>
-                            <option value="4:00 PM">4:00 PM</option>
-                            <option value="5:00 PM">5:00 PM</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Sección de pago que se muestra al hacer clic -->
-                <div class="payment-section-toggle">
-                    <button type="button" id="togglePaymentBtn" class="toggle-payment-btn">
-                        <i class="fas fa-credit-card"></i> Seleccionar forma de pago
-                    </button>
-                </div>
-                
-                <div id="paymentSection" class="payment-section">
-                    <div class="form-group">
-                        <label>Forma de pago preferida *</label>
-                        <div class="payment-options" id="paymentOptions">
-                            <div class="payment-option" data-payment="Efectivo">
-                                <i class="fas fa-money-bill-wave"></i>
-                                <span>Efectivo</span>
-                            </div>
-                            
-                            <div class="payment-option" data-payment="Tarjeta">
-                                <i class="fas fa-credit-card"></i>
-                                <span>Tarjeta</span>
-                            </div>
-                            
-                            <div class="payment-option" data-payment="Transferencia">
-                                <i class="fas fa-university"></i>
-                                <span>Transferencia</span>
-                            </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="Nombre">Nombre *</label>
+                            <input type="text" id="Nombre" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="Apellido">Apellido *</label>
+                            <input type="text" id="Apellido" class="form-control" required>
                         </div>
                     </div>
                     
-                    <div id="paymentMessage" class="payment-message">
-                        <p><i class="fas fa-phone-alt"></i> Para pagos con tarjeta o transferencia, por favor comuníquese al teléfono <strong>+1 (555) 123-4567</strong> para realizar el pago de manera segura.</p>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="Telefono">Teléfono *</label>
+                            <input type="tel" id="Telefono" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="Direccion">Dirección *</label>
+                            <input type="text" id="Direccion" class="form-control" required>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="total-price-container">
-                    <h3>Total a pagar:</h3>
-                    <div class="total-price">$<span id="totalPriceValue">0</span></div>
-                </div>
-                
-                <button type="submit" class="submit-btn">Enviar Solicitud de Cotización</button>
-                
-                <!-- Mensaje de estado -->
-                <div id="formMessage" class="form-message"></div>
-            </form>
+                    
+                    <div class="form-group">
+                        <label for="Tipo_Servicio">Tipo de Servicio *</label>
+                        <div class="service-select-container">
+                            <select id="Tipo_Servicio" class="form-control service-select" required>
+                                <option value="">Seleccione un servicio</option>
+                                <option value="mantenimiento">Mantenimiento $2,500</option>
+                                <option value="instalacion">Instalación $3,500</option>
+                                <option value="reparacion">Reparación (precio variable)</option>
+                                <option value="equipo">Compra de Equipo</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Campo para equipo (solo visible cuando es compra) -->
+                    <div class="form-group" id="equipo-field" style="display: none;">
+                        <label for="equipo_compra">Equipo a comprar *</label>
+                        <input type="text" id="equipo_compra" class="form-control" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Descripcion_problema">Descripción del problema o necesidad *</label>
+                        <textarea id="Descripcion_problema" class="form-control" rows="2" 
+                                placeholder="Describa brevemente el problema o lo que necesita..."
+                                required></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="Dia_Disponible">Día disponible </label>
+                            <select id="Dia_Disponible" class="form-control service-select" required>
+                                <option value="">Seleccione día</option>
+                                <option value="lunes">Lunes</option>
+                                <option value="martes">Martes</option>
+                                <option value="miercoles">Miércoles</option>
+                                <option value="jueves">Jueves</option>
+                                <option value="viernes">Viernes</option>
+                                <option value="sabado">Sábado</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="Hora_Disponible">Hora disponible *</label>
+                            <select id="Hora_Disponible" class="form-control service-select" required>
+                                <option value="">Seleccione hora</option>
+                                <option value="08:00 AM">8:00 AM</option>
+                                <option value="09:00 AM">9:00 AM</option>
+                                <option value="10:00 AM">10:00 AM</option>
+                                <option value="11:00 AM">11:00 AM</option>
+                                <option value="12:00 PM">12:00 PM</option>
+                                <option value="01:00 PM">1:00 PM</option>
+                                <option value="02:00 PM">2:00 PM</option>
+                                <option value="03:00 PM">3:00 PM</option>
+                                <option value="04:00 PM">4:00 PM</option>
+                                <option value="05:00 PM">5:00 PM</option>
+                                <option value="06:00 PM">6:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Sección de pago compacta -->
+                    <div class="payment-section-toggle">
+                        <button type="button" id="togglePaymentBtn" class="toggle-payment-btn">
+                            <i class="fas fa-credit-card"></i> Seleccionar forma de pago
+                        </button>
+                    </div>
+                    
+                    <div id="paymentSection" class="payment-section">
+                        <div class="form-group">
+                            <label>Forma de pago preferida *</label>
+                            <div class="payment-options" id="paymentOptions">
+                                <div class="payment-option" data-payment="Efectivo">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                    <span>Efectivo</span>
+                                </div>
+                                
+                                <div class="payment-option" data-payment="Tarjeta">
+                                    <i class="fas fa-credit-card"></i>
+                                    <span>Tarjeta</span>
+                                </div>
+                                
+                                <div class="payment-option" data-payment="Transferencia">
+                                    <i class="fas fa-university"></i>
+                                    <span>Transferencia</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Mensaje para pagos digitales -->
+                        <div id="mensajePagoDigital" class="mensaje-pago-digital" style="display:none;">
+                            <p><i class="fas fa-phone"></i> Para pagos con <strong>Tarjeta</strong> o <strong>Transferencia</strong>, comuníquese al: <strong>+1 (829) 123-4567</strong></p>
+                        </div>
+                    </div>
+
+                    <!-- Resumen total de compra -->
+                    <div id="resumenTotal" class="resumen-total" style="display:none;">
+                        <h3>Total de la compra</h3>
+                        <p id="detalleTotal"></p>
+                        <strong id="totalCompra">RD$ 0.00</strong>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Enviar Solicitud</button>
+                    
+                    <!-- Mensaje de estado -->
+                    <div id="formMessage" class="form-message"></div>
+                </form>
+            </div>
         </div>
     </section>
 
@@ -513,30 +735,72 @@
                 
                 <div class="carousel-track" id="carouselTrack">
                     <div class="carousel-slide">
-                        <img src="img\e333b530-6dbf-423d-a0c0-22d31d8cdb05.jfif" alt="Instalación de refrigeración">
+                        <img src="img\img carrucel.jfif" alt="Instalación de refrigeración">
                         <div class="carousel-caption">
                             <p>Instalación profesional</p>
                         </div>
                     </div>
                     
                     <div class="carousel-slide">
-                        <img src="img\b2b244ca-3d79-4b53-9352-4355aa8760bb.jfif" alt="Mantenimiento de equipo industrial">
+                        <img src="img\img carrucele 9.jfif" alt="Mantenimiento de equipo industrial">
                         <div class="carousel-caption">
                             <p>Mantenimiento de equipo industrial</p>
                         </div>
                     </div>
                     
                     <div class="carousel-slide">
-                        <img src="img\12db9e59-8ace-4f65-af39-53cf6400afba.jfif" alt="Reparación de cámara frigorífica">
+                        <img src="img\img carucel 2.jfif" alt="Reparación de cámara frigorífica">
                         <div class="carousel-caption">
                             <p>Reparación de cámara frigorífica</p>
                         </div>
                     </div>
                     
                     <div class="carousel-slide">
-                        <img src="img\11f0a5de-c606-4607-aacc-38052bef7b75.jfif" alt="Instalación de aire acondicionado">
+                        <img src="img\img carrucel 3.jfif" alt="Instalación de aire acondicionado">
                         <div class="carousel-caption">
                             <p>Instalación de aire acondicionado</p>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-slide">
+                        <img src="img\ing carrucel 4.jfif" alt="Proyecto industrial">
+                        <div class="carousel-caption">
+                            <p>Proyecto industrial completo</p>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-slide">
+                        <img src="img\img carrucel 5.jfif" alt="Mantenimiento preventivo">
+                        <div class="carousel-caption">
+                            <p>Mantenimiento preventivo</p>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-slide">
+                        <img src="img\img carrucel 6.jfif" alt="Instalación comercial">
+                        <div class="carousel-caption">
+                            <p>Instalación comercial</p>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-slide">
+                        <img src="img\img carrucel 7.jfif" alt="Reparación urgente">
+                        <div class="carousel-caption">
+                            <p>Reparación urgente 24/7</p>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-slide">
+                        <img src="img\img carrucel 8.jfif" alt="Equipo industrial">
+                        <div class="carousel-caption">
+                            <p>Equipo industrial especializado</p>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-slide">
+                        <img src="img\img carrucel 10.jfif" alt="Sistema completo">
+                        <div class="carousel-caption">
+                            <p>Sistema completo de refrigeración</p>
                         </div>
                     </div>
                 </div>
@@ -545,9 +809,7 @@
                     <i class="fas fa-chevron-right"></i>
                 </button>
                 
-                <div class="carousel-dots" id="carouselDots">
-                    <!-- Los puntos se generarán con JavaScript -->
-                </div>
+                <div class="carousel-dots" id="carouselDots"></div>
             </div>
         </div>
     </section>
@@ -561,30 +823,53 @@
             </div>
             
             <div class="about-content">
-                <div class="about-text">
-                    <h3>Expertos en Soluciones de Refrigeración desde 2008</h3>
-                    <p> FrostControl es una división especializada de la empresa dedicada a la venta, instalación, mantenimiento y reparación de equipos de refrigeración comercial e industrial. </p>
-
-                    <p> Ofrecemos soluciones completas que incluyen la comercialización de equipos, servicios técnicos preventivos y correctivos, garantizando el óptimo funcionamiento y la durabilidad de cada sistema.</p>
-
-                  <p> Nuestro equipo trabaja con herramientas especializadas, repuestos de calidad y personal capacitado para asegurar un servicio eficiente y confiable.</p>
+                <div class="about-image-large">
+                    <img src="img\6to refrigeracion.jfif" alt="Equipo FrostControl" class="team-image-large">
+                    <div class="image-overlay">
+                        <p>Nuestro equipo de especialistas trabajando juntos</p>
+                    </div>
                 </div>
                 
-                <div class="about-stats">
-                    <div class="stat-item fade-in">
-                        <div class="stat-number">15+</div>
-                        <p>Años de Experiencia</p>
-                    </div>
+                <div class="about-text-content">
+                    <h3>Expertos en Soluciones de Refrigeración desde 2008</h3>
+                    <p>FrostControl es una división especializada de la empresa dedicada a la venta, instalación, mantenimiento y reparación de equipos de refrigeración comercial e industrial.</p>
+
+                    <p>Ofrecemos soluciones completas que incluyen la comercialización de equipos, servicios técnicos preventivos y correctivos, garantizando el óptimo funcionamiento y la durabilidad de cada sistema.</p>
+
+                    <p>Nuestro equipo trabaja con herramientas especializadas, repuestos de calidad y personal capacitado para asegurar un servicio eficiente y confiable.</p>
                     
-                    <div class="stat-item fade-in">
-                        <div class="stat-number">2,500+</div>
-                        <p>Clientes Satisfechos</p>
+                    <div class="team-info">
+                        <h4>Nuestro Equipo</h4>
+                        <p><strong>17 Especialistas Certificados</strong> trabajando en 4 brigadas especializadas:</p>
+                        <ul class="team-list">
+                            <li><i class="fas fa-wrench"></i> Brigada de Reparación (4 técnicos)</li>
+                            <li><i class="fas fa-chart-line"></i> Brigada de Gestión Empresarial (5 especialistas)</li>
+                            <li><i class="fas fa-shopping-cart"></i> Brigada de Ventas (4 profesionales)</li>
+                            <li><i class="fas fa-truck"></i> Brigada de Logística (4 coordinadores)</li>
+                        </ul>
                     </div>
-                    
-                    <div class="stat-item fade-in">
-                        <div class="stat-number">24/7</div>
-                        <p>Servicio de Emergencia</p>
-                    </div>
+                </div>
+            </div>
+            
+            <div class="about-stats">
+                <div class="stat-item fade-in">
+                    <div class="stat-number">15+</div>
+                    <p>Años de Experiencia</p>
+                </div>
+                
+                <div class="stat-item fade-in">
+                    <div class="stat-number">2,500+</div>
+                    <p>Clientes Satisfechos</p>
+                </div>
+                
+                <div class="stat-item fade-in">
+                    <div class="stat-number">24/7</div>
+                    <p>Servicio de Emergencia</p>
+                </div>
+                
+                <div class="stat-item fade-in">
+                    <div class="stat-number">17</div>
+                    <p>Especialistas</p>
                 </div>
             </div>
         </div>
@@ -613,8 +898,8 @@
                         <i class="fas fa-envelope"></i>
                     </div>
                     <h3>Email</h3>
-                    <p>info@refripro.com</p>
-                    <p>cotizaciones@refripro.com</p>
+                    <p>info@frostcontrol.com</p>
+                    <p>cotizaciones@frostcontrol.com</p>
                 </div>
                 
                 <div class="contact-card fade-in">
@@ -623,7 +908,7 @@
                     </div>
                     <h3>Dirección</h3>
                     <p>Av. Francisco Alberto Caamaño</p>
-                    <p>Av. Dueñó 6, </p>
+                    <p>Av. Dueño 6,</p>
                     <p>San Francisco de Macorís 31000</p>
                 </div>
             </div>
@@ -635,7 +920,7 @@
         <div class="container">
             <div class="footer-content">
                 <div>
-                    <div class="footer-logo">Refri<span>Pro</span></div>
+                    <div class="footer-logo">Frost<span>Control</span></div>
                     <p class="footer-description">Soluciones profesionales en refrigeración comercial e industrial. Calidad, eficiencia y compromiso desde 2008.</p>
                     <a href="https://www.instagram.com/6toarefrigeracion?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="instagram-link">
                         <i class="fab fa-instagram"></i> Síguenos en Instagram
@@ -669,7 +954,7 @@
             </div>
             
             <div class="copyright">
-                <p>&copy; 2023 RefriPro. Todos los derechos reservados. | Diseño profesional para soluciones en refrigeración</p>
+                <p>&copy; 2023 FrostControl. Todos los derechos reservados. | Soluciones especializadas en refrigeración</p>
             </div>
         </div>
     </footer>

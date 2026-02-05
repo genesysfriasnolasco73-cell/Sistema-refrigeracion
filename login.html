@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrostControl - Sistema de Gestión</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0c2461 0%, #1e3799 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+        }
+        
+        .company-header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+        
+        .company-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            letter-spacing: 2px;
+        }
+        
+        .company-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .login-card {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            transition: transform 0.3s ease;
+        }
+        
+        .login-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .login-title {
+            color: #0c2461;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        select, input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        select:focus, input:focus {
+            outline: none;
+            border-color: #1e3799;
+        }
+        
+        .login-btn {
+            background: linear-gradient(to right, #0c2461, #1e3799);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .login-btn:hover {
+            background: linear-gradient(to right, #1e3799, #0c2461);
+            box-shadow: 0 5px 15px rgba(30, 55, 153, 0.4);
+        }
+        
+        .employee-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+            max-width: 1000px;
+        }
+        
+        .employee-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            width: 180px;
+            text-align: center;
+            color: white;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .employee-card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .employee-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: white;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #0c2461;
+        }
+        
+        .employee-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .employee-role {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .employee-brigade {
+            font-size: 0.8rem;
+            margin-top: 8px;
+            padding: 4px 8px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        
+        .brigade-repair {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+        }
+        
+        .brigade-finance {
+            background-color: rgba(155, 89, 182, 0.2);
+            color: #9b59b6;
+        }
+        
+        .brigade-sales {
+            background-color: rgba(52, 152, 219, 0.2);
+            color: #3498db;
+        }
+        
+        .brigade-logistics {
+            background-color: rgba(241, 196, 15, 0.2);
+            color: #f1c40f;
+        }
+        
+        .brigade-direction {
+            background-color: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+        }
+        
+        .dashboard-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .dashboard-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        @media (max-width: 768px) {
+            .login-card {
+                padding: 30px 20px;
+            }
+            
+            .company-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .employee-card {
+                width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="company-header">
+            <h1>FROSTCONTROL</h1>
+            <p>Sistema de Gestión Empresarial</p>
+        </div>
+        
+        <div class="login-card">
+            <h2 class="login-title">Iniciar Sesión</h2>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="userSelect">Selecciona tu Perfil</label>
+                    <select id="userSelect">
+                        <option value="">-- Selecciona un empleado --</option>
+                        
+                        <!-- Dirección General -->
+                        <optgroup label="Dirección General">
+                            <option value="jerickson">Jerickson Moya R. - Supervisor General</option>
+                        </optgroup>
+                        
+                        <!-- Brigada de Reparación -->
+                        <optgroup label="Brigada de Reparación/Mantenimiento">
+                            <option value="oliver">Oliver Santos - Jefe de Brigada</option>
+                            <option value="diamond">Diamond Antigua - Técnico</option>
+                            <option value="marcos">Marcos Nolasco - Técnico</option>
+                            <option value="radely">Radely De La Cruz - Técnico</option>
+                        </optgroup>
+                        
+                        <!-- Brigada de Gestión Empresarial y Finanzas -->
+                        <optgroup label="Brigada de Gestión y Finanzas">
+                            <option value="stward">Stward Álvarez - Jefe de Brigada</option>
+                            <option value="ansely">Ansely Polonia - Finanzas y Presupuesto</option>
+                            <option value="darianny">Darianny Tejada - Compras de Materiales</option>
+                            <option value="josue">Josué Mendoza - Registro de Ingresos y Gastos</option>
+                            <option value="raynilda">Raynilda Rosario - Organización Administrativa</option>
+                        </optgroup>
+                        
+                        <!-- Brigada de Ventas, Atención al Cliente y Marketing -->
+                        <optgroup label="Brigada de Ventas y Marketing">
+                            <option value="arbelis">Arbelis Vargas - Jefe de Brigada</option>
+                            <option value="waldy">Waldy De Jesús - Ventas de Equipos</option>
+                            <option value="hadeliz">Hadeliz Gonzales - Atención al Cliente</option>
+                            <option value="nicolle">Nicolle Fernández - Publicidad y Redes Sociales</option>
+                            <option value="aneury">Aneury De Jesus - Cotizaciones</option>
+                        </optgroup>
+                        
+                        <!-- Brigada de Logística y Almacén -->
+                        <optgroup label="Brigada de Logística y Almacén">
+                            <option value="jankeiry">Jankeiry Polanco - Inventario</option>
+                            <option value="orlenny">Orlenny Cuello - Organización de Herramientas</option>
+                            <option value="oliver2">Oliver Santos - Transporte de Equipos</option>
+                        </optgroup>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" placeholder="Ingresa tu contraseña" required>
+                </div>
+                
+                <button type="submit" class="login-btn">Iniciar Sesión</button>
+            </form>
+        </div>
+        
+        <div class="employee-list" id="employeeList">
+            <!-- Empleados se cargarán aquí dinámicamente -->
+        </div>
+        
+        <a href="#" class="dashboard-link" id="adminAccess" style="display: none;">Acceso al Panel de Administración Completo</a>
+    </div>
+    
+    <script>
+        // Lista de empleados con sus datos
+        const employees = [
+            // Dirección General
+            { id: "jerickson", initials: "JM", name: "Jerickson Moya R.", role: "Supervisor General", brigade: "direction", email: "jerickson@frostcontrol.com" },
+            
+            // Brigada de Reparación
+            { id: "oliver", initials: "OS", name: "Oliver Santos", role: "Jefe de Brigada", brigade: "repair", email: "oliver@frostcontrol.com" },
+            { id: "diamond", initials: "DA", name: "Diamond Antigua", role: "Técnico de Refrigeración", brigade: "repair", email: "diamond@frostcontrol.com" },
+            { id: "marcos", initials: "MN", name: "Marcos Nolasco", role: "Técnico de Refrigeración", brigade: "repair", email: "marcos@frostcontrol.com" },
+            { id: "radely", initials: "RD", name: "Radely De La Cruz", role: "Técnico de Refrigeración", brigade: "repair", email: "radely@frostcontrol.com" },
+            
+            // Brigada de Gestión Empresarial y Finanzas
+            { id: "stward", initials: "SA", name: "Stward Álvarez", role: "Jefe de Brigada", brigade: "finance", email: "stward@frostcontrol.com" },
+            { id: "ansely", initials: "AP", name: "Ansely Polonia", role: "Finanzas y Presupuesto", brigade: "finance", email: "ansely@frostcontrol.com" },
+            { id: "darianny", initials: "DT", name: "Darianny Tejada", role: "Compras de Materiales", brigade: "finance", email: "darianny@frostcontrol.com" },
+            { id: "josue", initials: "JM", name: "Josué Mendoza", role: "Registro de Ingresos y Gastos", brigade: "finance", email: "josue@frostcontrol.com" },
+            { id: "raynilda", initials: "RR", name: "Raynilda Rosario", role: "Organización Administrativa", brigade: "finance", email: "raynilda@frostcontrol.com" },
+            
+            // Brigada de Ventas, Atención al Cliente y Marketing
+            { id: "arbelis", initials: "AV", name: "Arbelis Vargas", role: "Jefe de Brigada", brigade: "sales", email: "arbelis@frostcontrol.com" },
+            { id: "waldy", initials: "WD", name: "Waldy De Jesús", role: "Ventas de Equipos", brigade: "sales", email: "waldy@frostcontrol.com" },
+            { id: "hadeliz", initials: "HG", name: "Hadeliz Gonzales", role: "Atención al Cliente", brigade: "sales", email: "hadeliz@frostcontrol.com" },
+            { id: "nicolle", initials: "NF", name: "Nicolle Fernández", role: "Publicidad y Redes Sociales", brigade: "sales", email: "nicolle@frostcontrol.com" },
+            { id: "aneury", initials: "AD", name: "Aneury De Jesus", role: "Cotizaciones", brigade: "sales", email: "aneury@frostcontrol.com" },
+            
+            // Brigada de Logística y Almacén
+            { id: "jankeiry", initials: "JP", name: "Jankeiry Polanco", role: "Inventario", brigade: "logistics", email: "jankeiry@frostcontrol.com" },
+            { id: "orlenny", initials: "OC", name: "Orlenny Cuello", role: "Organización de Herramientas", brigade: "logistics", email: "orlenny@frostcontrol.com" },
+            { id: "oliver2", initials: "OS", name: "Oliver Santos", role: "Transporte de Equipos", brigade: "logistics", email: "oliver.transporte@frostcontrol.com" }
+        ];
+        
+        // Mapeo de brigadas a clases CSS y nombres
+        const brigadeInfo = {
+            "direction": { class: "brigade-direction", name: "Dirección General" },
+            "repair": { class: "brigade-repair", name: "Reparación/Mantenimiento" },
+            "finance": { class: "brigade-finance", name: "Gestión y Finanzas" },
+            "sales": { class: "brigade-sales", name: "Ventas y Marketing" },
+            "logistics": { class: "brigade-logistics", name: "Logística y Almacén" }
+        };
+        
+        // Función para cargar la lista de empleados
+        function loadEmployeeList() {
+            const employeeList = document.getElementById('employeeList');
+            employeeList.innerHTML = '';
+            
+            employees.forEach(employee => {
+                const brigade = brigadeInfo[employee.brigade];
+                
+                const employeeCard = document.createElement('div');
+                employeeCard.className = 'employee-card';
+                employeeCard.innerHTML = `
+                    <div class="employee-avatar">${employee.initials}</div>
+                    <div class="employee-name">${employee.name}</div>
+                    <div class="employee-role">${employee.role}</div>
+                    <div class="employee-brigade ${brigade.class}">${brigade.name}</div>
+                `;
+                
+                employeeCard.addEventListener('click', () => {
+                    document.getElementById('userSelect').value = employee.id;
+                });
+                
+                employeeList.appendChild(employeeCard);
+            });
+        }
+        
+        // Manejar el envío del formulario de login
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const selectedUser = document.getElementById('userSelect').value;
+            const password = document.getElementById('password').value;
+            
+            if (!selectedUser) {
+                alert('Por favor, selecciona un perfil de usuario');
+                return;
+            }
+            
+            if (!password) {
+                alert('Por favor, ingresa tu contraseña');
+                return;
+            }
+            
+            // Contraseña simple para demostración (en un sistema real sería más segura)
+            if (password !== "frost2024") {
+                alert('Contraseña incorrecta. Usa "frost2024" para demo.');
+                return;
+            }
+            
+            // Redirigir al panel correspondiente
+            window.location.href = `panel.html?user=${selectedUser}`;
+        });
+        
+        // Mostrar acceso de administrador para Jerickson
+        document.getElementById('userSelect').addEventListener('change', function() {
+            const adminAccess = document.getElementById('adminAccess');
+            if (this.value === 'jerickson') {
+                adminAccess.style.display = 'inline-block';
+            } else {
+                adminAccess.style.display = 'none';
+            }
+        });
+        
+        // Acceso directo al panel de administración completo
+        document.getElementById('adminAccess').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = `panel.html?user=jerickson&admin=true`;
+        });
+        
+        // Cargar la lista de empleados al iniciar
+        loadEmployeeList();
+    </script>
+</body>
+</html>
