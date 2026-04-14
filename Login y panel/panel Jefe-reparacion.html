@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrostControl - Panel de Jefe de Reparación</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ESTILOS GENERALES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        body {
+            background: #f5f7fa;
+            color: #333;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* SIDEBAR */
+        .sidebar {
+            width: 260px;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sidebar-header {
+            padding: 25px;
+            background: linear-gradient(to right, #2e7d32, #388e3c);
+            color: white;
+            text-align: center;
+        }
+        
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: white;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #2e7d32;
+            border: 3px solid white;
+        }
+        
+        .user-info h3 {
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+        
+        .user-info p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        
+        /* MENÚ */
+        .menu {
+            padding: 20px 0;
+            flex: 1;
+        }
+        
+        .menu-item {
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #555;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border-left: 4px solid transparent;
+        }
+        
+        .menu-item:hover,
+        .menu-item.active {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border-left-color: #2e7d32;
+        }
+        
+        .menu-item i {
+            width: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .logout-btn {
+            margin: 20px;
+            padding: 12px;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+        
+        /* CONTENIDO PRINCIPAL */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        
+        .header h1 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* ESTADÍSTICAS */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            text-align: center;
+            border-top: 4px solid;
+        }
+        
+        .stat-card.pendientes {
+            border-color: #ff9800;
+        }
+        
+        .stat-card.proceso {
+            border-color: #2196f3;
+        }
+        
+        .stat-card.completados {
+            border-color: #4caf50;
+        }
+        
+        .stat-card.tecnico {
+            border-color: #9c27b0;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* TRABAJOS PENDIENTES */
+        .trabajos-container {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .section-title h2 {
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .filter-options {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .filter-btn {
+            padding: 8px 16px;
+            background: #f5f5f5;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+        }
+        
+        .filter-btn.active {
+            background: #2e7d32;
+            color: white;
+        }
+        
+        /* LISTA DE TRABAJOS */
+        .trabajos-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .trabajo-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 4px solid #ff9800;
+            transition: all 0.3s;
+        }
+        
+        .trabajo-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+        }
+        
+        .trabajo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .trabajo-info h4 {
+            color: #2e7d32;
+            margin-bottom: 5px;
+        }
+        
+        .trabajo-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .trabajo-estado {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .estado-pendiente {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .estado-asignado {
+            background: #cce5ff;
+            color: #004085;
+        }
+        
+        .trabajo-detalles {
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #eee;
+        }
+        
+        .detalle-item {
+            margin-bottom: 8px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .detalle-item strong {
+            min-width: 120px;
+            color: #555;
+        }
+        
+        /* ACCIONES */
+        .trabajo-acciones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #2e7d32;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #2196f3;
+            color: white;
+        }
+        
+        .btn-success {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .btn-warning {
+            background: #ff9800;
+            color: white;
+        }
+        
+        .btn-danger {
+            background: #f44336;
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #2e7d32;
+            color: white;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group select,
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        
+        /* HISTORIAL */
+        .historial-container {
+            display: none;
+        }
+        
+        .reportes-container {
+            display: none;
+        }
+        
+        .historial-item {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid #4caf50;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .historial-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .historial-cliente {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .historial-fecha {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+            }
+            
+            .trabajo-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .trabajo-acciones {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="user-avatar">
+                    <i class="fas fa-hard-hat"></i>
+                </div>
+                <div class="user-info">
+                    <h3>Oliver Santos</h3>
+                    <p><i class="fas fa-briefcase"></i> Jefe de Brigada Reparación</p>
+                </div>
+            </div>
+            
+            <div class="menu">
+                <div class="menu-item active" onclick="showTrabajosPendientes()">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Trabajos Pendientes</span>
+                </div>
+                
+                <div class="menu-item" onclick="showHistorialTrabajos()">
+                    <i class="fas fa-history"></i>
+                    <span>Historial de Trabajos</span>
+                </div>
+                
+                <div class="menu-item" onclick="showReportesTecnicos()">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Reportes de Técnicos</span>
+                </div>
+                
+                <div class="menu-item" onclick="verEstadisticas()">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Estadísticas</span>
+                </div>
+            </div>
+            
+            <button class="logout-btn" onclick="cerrarSesion()">
+                <i class="fas fa-sign-out-alt"></i>
+                Cerrar Sesión
+            </button>
+        </div>
+        
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="main-content">
+            <div class="header">
+                <h1><i class="fas fa-tools"></i> Panel de Jefe de Brigada - Reparación</h1>
+                <p>Gestión de trabajos, asignación de técnicos y seguimiento de servicios</p>
+            </div>
+            
+            <!-- ESTADÍSTICAS -->
+            <div class="stats-grid">
+                <div class="stat-card pendientes">
+                    <div class="stat-number" id="contadorPendientes">0</div>
+                    <div class="stat-label">Trabajos Pendientes</div>
+                </div>
+                
+                <div class="stat-card proceso">
+                    <div class="stat-number" id="contadorProceso">0</div>
+                    <div class="stat-label">En Proceso</div>
+                </div>
+                
+                <div class="stat-card completados">
+                    <div class="stat-number" id="contadorCompletados">0</div>
+                    <div class="stat-label">Completados Hoy</div>
+                </div>
+                
+                <div class="stat-card tecnico">
+                    <div class="stat-number" id="contadorTecnicos">4</div>
+                    <div class="stat-label">Técnicos Activos</div>
+                </div>
+            </div>
+            
+            <!-- TRABAJOS PENDIENTES -->
+            <div id="trabajosPendientes" class="trabajos-container">
+                <div class="section-title">
+                    <h2><i class="fas fa-clipboard-list"></i> Trabajos Pendientes</h2>
+                    <div class="filter-options">
+                        <button class="filter-btn active" onclick="filtrarTrabajos('todos')">Todos</button>
+                        <button class="filter-btn" onclick="filtrarTrabajos('pendiente')">Pendientes</button>
+                        <button class="filter-btn" onclick="filtrarTrabajos('asignado')">Asignados</button>
+                    </div>
+                </div>
+                
+                <div class="trabajos-list" id="listaTrabajos">
+                    <!-- Trabajos se cargan aquí dinámicamente -->
+                </div>
+            </div>
+            
+            <!-- HISTORIAL -->
+            <div id="historialTrabajos" class="trabajos-container historial-container">
+                <div class="section-title">
+                    <h2><i class="fas fa-history"></i> Historial de Trabajos</h2>
+                    <div class="filter-options">
+                        <select id="filtroHistorial" onchange="filtrarHistorial()">
+                            <option value="hoy">Hoy</option>
+                            <option value="semana">Esta Semana</option>
+                            <option value="mes">Este Mes</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="trabajos-list" id="listaHistorial">
+                    <!-- Historial se carga aquí -->
+                </div>
+            </div>
+            
+            <!-- REPORTES -->
+            <div id="reportesTecnicos" class="trabajos-container reportes-container">
+                <div class="section-title">
+                    <h2><i class="fas fa-chart-bar"></i> Reportes de Técnicos</h2>
+                </div>
+                
+                <div id="graficosReportes">
+                    <!-- Gráficos de reportes -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MODAL PARA ASIGNAR TÉCNICO -->
+    <div id="modalAsignar" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Asignar Técnico</h3>
+                <button class="close-modal" onclick="cerrarModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="selectTecnico">Seleccionar Técnico:</label>
+                    <select id="selectTecnico">
+                        <option value="diamond">Diamond Antigua</option>
+                        <option value="marcos">Marcos Nolasco</option>
+                        <option value="radelfy">Radelfy De La Cruz</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="fechaAsignacion">Fecha de Asignación:</label>
+                    <input type="date" id="fechaAsignacion" value="">
+                </div>
+                
+                <div class="form-group">
+                    <label for="notasAsignacion">Notas (opcional):</label>
+                    <input type="text" id="notasAsignacion" placeholder="Instrucciones especiales...">
+                </div>
+                
+                <div class="trabajo-acciones">
+                    <button class="btn btn-success" onclick="confirmarAsignacion()">
+                        <i class="fas fa-check"></i> Confirmar Asignación
+                    </button>
+                    <button class="btn btn-danger" onclick="cerrarModal()">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MODAL PARA MATERIALES -->
+    <div id="modalMateriales" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-box-open"></i> Materiales a Utilizar</h3>
+                <button class="close-modal" onclick="cerrarModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="listaMateriales">
+                    <!-- Materiales se cargan aquí -->
+                </div>
+                <div class="trabajo-acciones">
+                    <button class="btn btn-primary" onclick="agregarMaterial()">
+                        <i class="fas fa-plus"></i> Agregar Material
+                    </button>
+                    <button class="btn btn-secondary" onclick="verInventario()">
+                        <i class="fas fa-clipboard-list"></i> Ver Inventario
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Variables globales
+        let trabajoActual = null;
+        
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            cargarTrabajosPendientes();
+            cargarEstadisticas();
+            document.getElementById('fechaAsignacion').value = new Date().toISOString().split('T')[0];
+        });
+        
+        // Funciones de navegación
+        function showTrabajosPendientes() {
+            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('.menu-item')[0].classList.add('active');
+            
+            document.getElementById('trabajosPendientes').style.display = 'block';
+            document.getElementById('historialTrabajos').style.display = 'none';
+            document.getElementById('reportesTecnicos').style.display = 'none';
+            
+            cargarTrabajosPendientes();
+        }
+        
+        function showHistorialTrabajos() {
+            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('.menu-item')[1].classList.add('active');
+            
+            document.getElementById('trabajosPendientes').style.display = 'none';
+            document.getElementById('historialTrabajos').style.display = 'block';
+            document.getElementById('reportesTecnicos').style.display = 'none';
+            
+            cargarHistorial();
+        }
+        
+        function showReportesTecnicos() {
+            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('.menu-item')[2].classList.add('active');
+            
+            document.getElementById('trabajosPendientes').style.display = 'none';
+            document.getElementById('historialTrabajos').style.display = 'none';
+            document.getElementById('reportesTecnicos').style.display = 'block';
+            
+            cargarReportes();
+        }
+        
+        // Cargar trabajos pendientes
+        async function cargarTrabajosPendientes() {
+            const lista = document.getElementById('listaTrabajos');
+            lista.innerHTML = '<p style="text-align: center; padding: 40px; color: #666;">Cargando trabajos...</p>';
+            
+            // Simulación de datos (en producción se conectaría a Supabase)
+            setTimeout(() => {
+                const trabajos = [
+                    {
+                        id: 1,
+                        cliente: 'Juan Pérez',
+                        telefono: '809-555-1234',
+                        direccion: 'Calle Principal #123',
+                        servicio: 'Reparación de nevera',
+                        descripcion: 'Nevera no enfría, posible problema en el compresor',
+                        fecha: '2024-01-15',
+                        hora: '10:00 AM',
+                        estado: 'pendiente'
+                    },
+                    {
+                        id: 2,
+                        cliente: 'María Rodríguez',
+                        telefono: '809-555-5678',
+                        direccion: 'Av. Independencia #456',
+                        servicio: 'Mantenimiento de aire acondicionado',
+                        descripcion: 'Limpieza y revisión general',
+                        fecha: '2024-01-15',
+                        hora: '2:00 PM',
+                        estado: 'asignado',
+                        tecnico: 'Diamond Antigua'
+                    },
+                    {
+                        id: 3,
+                        cliente: 'Carlos García',
+                        telefono: '809-555-9012',
+                        direccion: 'Sector Los Jardines #789',
+                        servicio: 'Instalación de split',
+                        descripcion: 'Instalación nueva de sistema split 12,000 BTU',
+                        fecha: '2024-01-16',
+                        hora: '9:00 AM',
+                        estado: 'pendiente'
+                    }
+                ];
+                
+                let html = '';
+                trabajos.forEach(trabajo => {
+                    html += `
+                        <div class="trabajo-card" data-id="${trabajo.id}">
+                            <div class="trabajo-header">
+                                <div class="trabajo-info">
+                                    <h4>${trabajo.cliente}</h4>
+                                    <p><i class="fas fa-phone"></i> ${trabajo.telefono} | <i class="fas fa-calendar"></i> ${trabajo.fecha} ${trabajo.hora}</p>
+                                </div>
+                                <div class="trabajo-estado estado-${trabajo.estado}">
+                                    ${trabajo.estado === 'pendiente' ? 'Pendiente' : 'Asignado a ' + trabajo.tecnico}
+                                </div>
+                            </div>
+                            
+                            <div class="trabajo-detalles">
+                                <div class="detalle-item">
+                                    <strong>Servicio:</strong> ${trabajo.servicio}
+                                </div>
+                                <div class="detalle-item">
+                                    <strong>Dirección:</strong> ${trabajo.direccion}
+                                </div>
+                                <div class="detalle-item">
+                                    <strong>Descripción:</strong> ${trabajo.descripcion}
+                                </div>
+                            </div>
+                            
+                            <div class="trabajo-acciones">
+                                ${trabajo.estado === 'pendiente' ? `
+                                    <button class="btn btn-primary" onclick="asignarTecnico(${trabajo.id})">
+                                        <i class="fas fa-user-check"></i> Asignar Técnico
+                                    </button>
+                                ` : ''}
+                                
+                                <button class="btn btn-secondary" onclick="verMateriales(${trabajo.id})">
+                                    <i class="fas fa-box-open"></i> Materiales
+                                </button>
+                                
+                                <button class="btn btn-warning" onclick="informarSalida(${trabajo.id})">
+                                    <i class="fas fa-car"></i> Informar Salida
+                                </button>
+                                
+                                <button class="btn btn-success" onclick="completarTrabajo(${trabajo.id})">
+                                    <i class="fas fa-check-circle"></i> Completar
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                lista.innerHTML = html || '<p style="text-align: center; padding: 40px; color: #666;">No hay trabajos pendientes</p>';
+            }, 1000);
+        }
+        
+        // Funciones de asignación
+        function asignarTecnico(trabajoId) {
+            trabajoActual = trabajoId;
+            document.getElementById('modalAsignar').style.display = 'flex';
+        }
+        
+        function confirmarAsignacion() {
+            const tecnico = document.getElementById('selectTecnico').value;
+            const fecha = document.getElementById('fechaAsignacion').value;
+            const notas = document.getElementById('notasAsignacion').value;
+            
+            // Aquí se enviaría la asignación a la base de datos
+            alert(`Trabajo asignado a ${tecnico} para el ${fecha}`);
+            cerrarModal();
+            cargarTrabajosPendientes();
+            cargarEstadisticas();
+        }
+        
+        // Funciones de materiales
+        function verMateriales(trabajoId) {
+            trabajoActual = trabajoId;
+            
+            const materialesHTML = `
+                <h4>Materiales para este trabajo:</h4>
+                <div class="trabajo-detalles">
+                    <div class="detalle-item">
+                        <strong>Compresor 1/4 HP:</strong> 1 unidad
+                    </div>
+                    <div class="detalle-item">
+                        <strong>Gas refrigerante R-410A:</strong> 2 libras
+                    </div>
+                    <div class="detalle-item">
+                        <strong>Aceite lubricante:</strong> 500 ml
+                    </div>
+                    <div class="detalle-item">
+                        <strong>Filtro deshidratador:</strong> 1 unidad
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('listaMateriales').innerHTML = materialesHTML;
+            document.getElementById('modalMateriales').style.display = 'flex';
+        }
+        
+        // Funciones de comunicación
+        function informarSalida(trabajoId) {
+            // Obtener información del trabajo
+            const trabajo = {
+                id: trabajoId,
+                cliente: 'Juan Pérez',
+                tecnico: 'Oliver Santos'
+            };
+            
+            // Mostrar modal de confirmación
+            if (confirm(`¿Informar a Servicio al Cliente que saliste al servicio de ${trabajo.cliente}?`)) {
+                alert('✔️ Se ha informado a Servicio al Cliente sobre tu salida');
+                
+                // Mostrar opciones de contacto
+                const opciones = `
+                    <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin-top: 15px;">
+                        <h4><i class="fas fa-phone"></i> Opciones de contacto:</h4>
+                        <button class="btn btn-primary" onclick="llamarServicioCliente()" style="margin-top: 10px;">
+                            <i class="fas fa-phone-alt"></i> Llamar a Servicio al Cliente
+                        </button>
+                        <button class="btn btn-secondary" onclick="enviarUbicacion()" style="margin-top: 10px;">
+                            <i class="fas fa-map-marker-alt"></i> Enviar Ubicación
+                        </button>
+                    </div>
+                `;
+                
+                document.querySelector(`[data-id="${trabajoId}"] .trabajo-acciones`).innerHTML += opciones;
+            }
+        }
+        
+        function llamarServicioCliente() {
+            const numero = '+1 (829) 123-4567';
+            alert(`Llamando a Servicio al Cliente: ${numero}\n\nEsta función abrirá la aplicación de llamadas en tu dispositivo.`);
+            // En un dispositivo móvil, esto abriría la aplicación de llamadas
+            window.location.href = `tel:${numero.replace(/\D/g, '')}`;
+        }
+        
+        // Funciones de estadísticas
+        async function cargarEstadisticas() {
+            // Simulación de estadísticas
+            document.getElementById('contadorPendientes').textContent = '5';
+            document.getElementById('contadorProceso').textContent = '3';
+            document.getElementById('contadorCompletados').textContent = '12';
+        }
+        
+        // Funciones de utilidad
+        function cerrarModal() {
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.style.display = 'none';
+            });
+        }
+        
+        function cerrarSesion() {
+            if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                window.location.href = 'login.html';
+            }
+        }
+        
+        function completarTrabajo(trabajoId) {
+            if (confirm('¿Marcar este trabajo como completado?')) {
+                alert('Trabajo marcado como completado');
+                cargarTrabajosPendientes();
+                cargarEstadisticas();
+            }
+        }
+        
+        // Cerrar modal al hacer clic fuera
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                cerrarModal();
+            }
+        };
+    </script>
+</body>
+</html>

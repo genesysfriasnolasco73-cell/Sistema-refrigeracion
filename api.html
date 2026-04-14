@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PesoDominicano.live - Conversor LATAM → DOP</title>
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts para tipografía moderna -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== VARIABLES ===== */
+        :root {
+            --primary: #002D62;      /* Azul bandera Dominicana */
+            --secondary: #CE1126;    /* Rojo bandera Dominicana */
+            --accent: #F7C548;       /* Amarillo cálido */
+            --dark: #1E293B;
+            --light: #F8FAFC;
+            --gray: #94A3B8;
+            --success: #10B981;
+            --card-bg: #FFFFFF;
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 20px 50px rgba(0, 45, 98, 0.15);
+            --border-radius: 24px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9edf5 100%);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            color: var(--dark);
+            line-height: 1.5;
+        }
+
+        /* ===== CONTENEDOR PRINCIPAL ===== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ===== HEADER CON BANDERA DOMINICANA ===== */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, #001a3a 100%);
+            color: white;
+            padding: 2rem 2.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(206, 17, 38, 0.2));
+            clip-path: polygon(100% 0, 0 0, 100% 100%);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header h1 i {
+            color: var(--accent);
+            font-size: 2rem;
+        }
+
+        .header .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .update-badge {
+            position: absolute;
+            top: 2rem;
+            right: 2.5rem;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(5px);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .update-badge i {
+            color: var(--accent);
+        }
+
+        /* ===== TARJETA DEL CONVERSOR ===== */
+        .converter-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .converter-card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .converter-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1.8rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .converter-title i {
+            background: var(--primary);
+            color: white;
+            padding: 8px;
+            border-radius: 12px;
+            font-size: 1rem;
+        }
+
+        .converter-grid {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr auto;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .input-group label {
+            font-weight: 500;
+            color: var(--gray);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-group input, .input-group select {
+            padding: 1rem 1.2rem;
+            border: 2px solid #E2E8F0;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            font-family: 'Inter', sans-serif;
+            background: white;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 45, 98, 0.1);
+        }
+
+        .input-group input {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .equal-sign {
+            font-size: 2rem;
+            color: var(--gray);
+            font-weight: 300;
+            text-align: center;
+        }
+
+        .result-box {
+            background: linear-gradient(135deg, var(--primary) 0%, #001a3a 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .result-box .result-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .result-box .result-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .result-box .result-value small {
+            font-size: 1rem;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        /* ===== ESTADÍSTICAS RÁPIDAS ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .stat-icon {
+            background: rgba(0, 45, 98, 0.1);
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .stat-content h3 {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--gray);
+            margin-bottom: 0.2rem;
+        }
+
+        .stat-content p {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        /* ===== TABLA DE MONEDAS ===== */
+        .table-container {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            overflow-x: auto;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .table-header h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--light);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            border: 1px solid #E2E8F0;
+        }
+
+        .search-box i {
+            color: var(--gray);
+        }
+
+        .search-box input {
+            border: none;
+            background: transparent;
+            padding: 0.3rem;
+            font-size: 0.95rem;
+            width: 200px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .search-box input:focus {
+            outline: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        th {
+            text-align: left;
+            padding: 1rem 0.5rem;
+            color: var(--gray);
+            font-weight: 500;
+            border-bottom: 2px solid #E2E8F0;
+        }
+
+        td {
+            padding: 1rem 0.5rem;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background-color: #F8FAFC;
+        }
+
+        .country-cell {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+        }
+
+        .flag {
+            font-size: 1.5rem;
+        }
+
+        .currency-code {
+            background: #E2E8F0;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .value-positive {
+            font-weight: 600;
+            color: var(--success);
+        }
+
+        .value-highlight {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .loading-spinner {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .loading-spinner i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            background: #FEE2E2;
+            color: #DC2626;
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            margin-top: 2.5rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .update-badge {
+                position: static;
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            .converter-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .equal-sign {
+                display: none;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER CON BANDERA DOMINICANA -->
+        <div class="header">
+            <h1>
+                <i class="fas fa-coins"></i> 
+                PesoDominicano<span style="color: var(--accent);">.live</span>
+            </h1>
+            <p class="subtitle">
+                <i class="fas fa-map-marked-alt" style="margin-right: 8px;"></i>
+                Conversión en tiempo real de todas las monedas de Latinoamérica a Pesos Dominicanos (DOP)
+            </p>
+            <div class="update-badge" id="update-badge">
+                <i class="fas fa-sync-alt"></i>
+                <span>Actualizando...</span>
+            </div>
+        </div>
+
+        <!-- CONVERSOR RÁPIDO -->
+        <div class="converter-card">
+            <div class="converter-title">
+                <i class="fas fa-calculator"></i>
+                <span>Conversor rápido</span>
+            </div>
+            <div class="converter-grid">
+                <div class="input-group">
+                    <label><i class="fas fa-dollar-sign"></i> Cantidad</label>
+                    <input type="number" id="amount" value="1" min="0" step="0.01">
+                </div>
+                <div class="input-group">
+                    <label><i class="fas fa-globe"></i> Desde</label>
+                    <select id="from-currency">
+                        <option value="DOP">🇩🇴 Peso Dominicano (DOP)</option>
+                    </select>
+                </div>
+                <div class="equal-sign">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                <div class="result-box">
+                    <div class="result-label">TOTAL EN DOP</div>
+                    <div class="result-value" id="converter-result">1.00 <small>DOP</small></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESTADÍSTICAS RÁPIDAS -->
+        <div class="stats-grid" id="stats-container">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="stat-content">
+                    <h3>Moneda más fuerte</h3>
+                    <p id="strongest-currency">Cargando...</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-percent"></i></div>
+                <div class="stat-content">
+                    <h3>1 USD en DOP</h3>
+                    <p id="usd-rate">Cargando...</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                <div class="stat-content">
+                    <h3>Países LATAM</h3>
+                    <p id="countries-count">19 monedas</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TABLA DE MONEDAS LATAM -->
+        <div class="table-container">
+            <div class="table-header">
+                <h2>
+                    <i class="fas fa-flag"></i>
+                    Monedas de Latinoamérica → Pesos Dominicanos
+                </h2>
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="search-input" placeholder="Buscar país o moneda...">
+                </div>
+            </div>
+            <div id="table-loading" class="loading-spinner">
+                <i class="fas fa-circle-notch"></i>
+                <p>Cargando datos de la API...</p>
+            </div>
+            <div id="table-error" class="error-message" style="display: none;"></div>
+            <table id="currency-table" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>País</th>
+                        <th>Moneda</th>
+                        <th>1 Unidad → DOP</th>
+                        <th>100 Unidades → DOP</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+            </table>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <span><i class="fas fa-code"></i> Práctica de aula - Conexión API</span>
+            <span><i class="fas fa-database"></i> Datos: ExchangeRate-API</span>
+            <a href="#" id="refresh-data"><i class="fas fa-sync-alt"></i> Actualizar ahora</a>
+        </div>
+    </div>
+
+    <script>
+        // ==================== CONFIGURACIÓN ====================
+        // IMPORTANTE: Reemplaza con TU API KEY de ExchangeRate-API
+        // Regístrate gratis en: https://www.exchangerate-api.com/
+        const API_KEY = 'TU-API-KEY-AQUI'; // 🔴 ¡CAMBIA ESTO!
+        const BASE_URL = `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/USD`;
+        
+        // Lista completa de países LATAM con banderas y códigos
+        const latamCurrencies = [
+            { country: "Argentina", flag: "🇦🇷", code: "ARS", name: "Peso Argentino" },
+            { country: "Bolivia", flag: "🇧🇴", code: "BOB", name: "Boliviano" },
+            { country: "Brasil", flag: "🇧🇷", code: "BRL", name: "Real Brasileño" },
+            { country: "Chile", flag: "🇨🇱", code: "CLP", name: "Peso Chileno" },
+            { country: "Colombia", flag: "🇨🇴", code: "COP", name: "Peso Colombiano" },
+            { country: "Costa Rica", flag: "🇨🇷", code: "CRC", name: "Colón Costarricense" },
+            { country: "Cuba", flag: "🇨🇺", code: "CUP", name: "Peso Cubano" },
+            { country: "Ecuador", flag: "🇪🇨", code: "USD", name: "Dólar Estadounidense" },
+            { country: "El Salvador", flag: "🇸🇻", code: "USD", name: "Dólar Estadounidense" },
+            { country: "Guatemala", flag: "🇬🇹", code: "GTQ", name: "Quetzal" },
+            { country: "Honduras", flag: "🇭🇳", code: "HNL", name: "Lempira" },
+            { country: "México", flag: "🇲🇽", code: "MXN", name: "Peso Mexicano" },
+            { country: "Nicaragua", flag: "🇳🇮", code: "NIO", name: "Córdoba" },
+            { country: "Panamá", flag: "🇵🇦", code: "PAB", name: "Balboa" },
+            { country: "Paraguay", flag: "🇵🇾", code: "PYG", name: "Guaraní" },
+            { country: "Perú", flag: "🇵🇪", code: "PEN", name: "Sol Peruano" },
+            { country: "República Dominicana", flag: "🇩🇴", code: "DOP", name: "Peso Dominicano" },
+            { country: "Uruguay", flag: "🇺🇾", code: "UYU", name: "Peso Uruguayo" },
+            { country: "Venezuela", flag: "🇻🇪", code: "VES", name: "Bolívar" }
+        ];
+
+        // ==================== ESTADO GLOBAL ====================
+        let exchangeData = null;
+        let filteredCurrencies = [...latamCurrencies];
+
+        // ==================== FUNCIONES PRINCIPALES ====================
+
+        // Obtener datos de la API
+        async function fetchExchangeRates() {
+            try {
+                showLoading(true);
+                hideError();
+                
+                const response = await fetch(BASE_URL);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.result === "success") {
+                    exchangeData = data;
+                    updateAllData(data);
+                    showLoading(false);
+                    return data;
+                } else {
+                    throw new Error("La API respondió con error");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                showError(`❌ Error al conectar con la API. Verifica tu API Key. ${error.message}`);
+                showLoading(false);
+                return null;
+            }
+        }
+
+        // Actualizar toda la interfaz con nuevos datos
+        function updateAllData(data) {
+            updateHeaderTime(data);
+            updateStats(data);
+            renderTable(data, filteredCurrencies);
+            populateSelector(data);
+            updateConverter(data);
+            updateUSDRate(data);
+            updateStrongestCurrency(data);
+        }
+
+        // Actualizar el tiempo en el header
+        function updateHeaderTime(data) {
+            const badge = document.getElementById('update-badge');
+            if (data.time_last_update_utc) {
+                const date = new Date(data.time_last_update_utc);
+                badge.innerHTML = `<i class="fas fa-sync-alt"></i> Actualizado: ${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+            }
+        }
+
+        // Actualizar selector de monedas
+        function populateSelector(data) {
+            const select = document.getElementById('from-currency');
+            const rates = data.conversion_rates;
+            
+            let options = '<option value="DOP">🇩🇴 Peso Dominicano (DOP)</option>';
+            
+            latamCurrencies.forEach(item => {
+                if (item.code !== 'DOP' && (rates[item.code] || item.code === 'USD')) {
+                    options += `<option value="${item.code}">${item.flag} ${item.country} (${item.code})</option>`;
+                }
+            });
+            
+            select.innerHTML = options;
+        }
+
+        // Actualizar conversor
+        function updateConverter(data) {
+            const amount = parseFloat(document.getElementById('amount').value) || 1;
+            const fromCurrency = document.getElementById('from-currency').value;
+            const rates = data.conversion_rates;
+            
+            // Si la moneda base es DOP, mostramos directamente
+            if (fromCurrency === 'DOP') {
+                document.getElementById('converter-result').innerHTML = `${amount.toFixed(2)} <small>DOP</small>`;
+                return;
+            }
+            
+            // Calcular conversión a DOP
+            const usdRate = 1; // USD es base
+            const fromRate = fromCurrency === 'USD' ? 1 : rates[fromCurrency];
+            const dopRate = rates.DOP;
+            
+            if (fromRate && dopRate) {
+                // Convertir: moneda → USD → DOP
+                const result = (amount / fromRate) * dopRate;
+                document.getElementById('converter-result').innerHTML = `${result.toFixed(2)} <small>DOP</small>`;
+            }
+        }
+
+        // Actualizar estadísticas
+        function updateStats(data) {
+            document.getElementById('countries-count').textContent = `${latamCurrencies.length} monedas`;
+        }
+
+        // Actualizar tasa USD
+        function updateUSDRate(data) {
+            const dopRate = data.conversion_rates.DOP;
+            document.getElementById('usd-rate').innerHTML = `<span class="value-highlight">${dopRate.toFixed(2)} DOP</span>`;
+        }
+
+        // Encontrar moneda más fuerte (excluyendo USD)
+        function updateStrongestCurrency(data) {
+            const rates = data.conversion_rates;
+            let strongest = { code: '', value: 0, name: '', flag: '' };
+            
+            latamCurrencies.forEach(item => {
+                if (item.code !== 'USD' && item.code !== 'DOP') {
+                    const rate = rates[item.code];
+                    if (rate && rate > strongest.value) {
+                        strongest = { 
+                            code: item.code, 
+                            value: rate,
+                            name: item.country,
+                            flag: item.flag
+                        };
+                    }
+                }
+            });
+            
+            if (strongest.code) {
+                document.getElementById('strongest-currency').innerHTML = 
+                    `${strongest.flag} ${strongest.name} <span class="currency-code">${strongest.code}</span>`;
+            }
+        }
+
+        // Renderizar tabla
+        function renderTable(data, currenciesToShow) {
+            const rates = data.conversion_rates;
+            const dopRate = rates.DOP;
+            const tbody = document.getElementById('table-body');
+            
+            if (!rates || !dopRate) {
+                showError("Datos de tasa DOP no disponibles");
+                return;
+            }
+            
+            let html = '';
+            
+            currenciesToShow.forEach(item => {
+                // Obtener tasa respecto a USD
+                let rateToUSD;
+                if (item.code === 'USD') {
+                    rateToUSD = 1;
+                } else {
+                    rateToUSD = rates[item.code];
+                }
+                
+                if (rateToUSD) {
+                    // Calcular conversión a DOP
+                    const oneToDOP = (1 / rateToUSD) * dopRate;
+                    const oneHundredToDOP = (100 / rateToUSD) * dopRate;
+                    
+                    // Determinar si es positivo (mayor que 1) para color
+                    const valueClass = oneToDOP >= 1 ? 'value-positive' : '';
+                    
+                    html += `<tr>
+                        <td>
+                            <div class="country-cell">
+                                <span class="flag">${item.flag}</span>
+                                ${item.country}
+                            </div>
+                        </td>
+                        <td>
+                            <span class="currency-code">${item.code}</span>
+                            ${item.name}
+                        </td>
+                        <td class="${valueClass} value-highlight">${oneToDOP.toFixed(4)} DOP</td>
+                        <td class="value-highlight">${oneHundredToDOP.toFixed(2)} DOP</td>
+                        <td>
+                            ${oneToDOP < 0.01 ? '🔸' : oneToDOP < 1 ? '🔹' : '💪'}
+                        </td>
+                    </tr>`;
+                } else {
+                    html += `<tr>
+                        <td>
+                            <div class="country-cell">
+                                <span class="flag">${item.flag}</span>
+                                ${item.country}
+                            </div>
+                        </td>
+                        <td>
+                            <span class="currency-code">${item.code}</span>
+                            ${item.name}
+                        </td>
+                        <td colspan="3" style="color: var(--gray);">Datos no disponibles</td>
+                    </tr>`;
+                }
+            });
+            
+            tbody.innerHTML = html;
+        }
+
+        // Filtro de búsqueda
+        function setupSearch() {
+            const searchInput = document.getElementById('search-input');
+            searchInput.addEventListener('input', (e) => {
+                const term = e.target.value.toLowerCase().trim();
+                
+                if (term === '') {
+                    filteredCurrencies = [...latamCurrencies];
+                } else {
+                    filteredCurrencies = latamCurrencies.filter(item => 
+                        item.country.toLowerCase().includes(term) || 
+                        item.name.toLowerCase().includes(term) ||
+                        item.code.toLowerCase().includes(term)
+                    );
+                }
+                
+                if (exchangeData) {
+                    renderTable(exchangeData, filteredCurrencies);
+                }
+            });
+        }
+
+        // Conversor en tiempo real
+        function setupConverter() {
+            document.getElementById('amount').addEventListener('input', () => {
+                if (exchangeData) updateConverter(exchangeData);
+            });
+            
+            document.getElementById('from-currency').addEventListener('change', () => {
+                if (exchangeData) updateConverter(exchangeData);
+            });
+        }
+
+        // Refresh manual
+        function setupRefresh() {
+            document.getElementById('refresh-data').addEventListener('click', (e) => {
+                e.preventDefault();
+                fetchExchangeRates();
+            });
+        }
+
+        // ==================== FUNCIONES DE UI ====================
+
+        function showLoading(isLoading) {
+            const loadingEl = document.getElementById('table-loading');
+            const tableEl = document.getElementById('currency-table');
+            
+            if (isLoading) {
+                loadingEl.style.display = 'block';
+                tableEl.style.display = 'none';
+            } else {
+                loadingEl.style.display = 'none';
+                tableEl.style.display = 'table';
+            }
+        }
+
+        function showError(message) {
+            const errorEl = document.getElementById('table-error');
+            const tableEl = document.getElementById('currency-table');
+            const loadingEl = document.getElementById('table-loading');
+            
+            errorEl.style.display = 'block';
+            errorEl.textContent = message;
+            tableEl.style.display = 'none';
+            loadingEl.style.display = 'none';
+        }
+
+        function hideError() {
+            document.getElementById('table-error').style.display = 'none';
+        }
+
+        // ==================== INICIALIZACIÓN ====================
+
+        async function init() {
+            // Verificar API Key
+            if (API_KEY === 'TU-API-KEY-AQUI') {
+                showError('⚠️ Por favor, reemplaza "TU-API-KEY-AQUI" con tu API Key de ExchangeRate-API. Regístrate gratis en https://www.exchangerate-api.com/');
+                return;
+            }
+            
+            // Configurar event listeners
+            setupSearch();
+            setupConverter();
+            setupRefresh();
+            
+            // Cargar datos iniciales
+            await fetchExchangeRates();
+            
+            // Auto-refresh cada 5 minutos (opcional)
+            setInterval(fetchExchangeRates, 5 * 60 * 1000);
+        }
+
+        // Iniciar todo cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orlenny Cuello - Herramientas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #16a085, #27ae60);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(22,160,133,0.2);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user-badge {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: linear-gradient(135deg, #16a085, #27ae60);
+            padding: 8px 25px;
+            border-radius: 50px;
+            color: white;
+        }
+
+        .dashboard {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 30px;
+        }
+
+        .welcome-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 30px;
+            padding: 40px;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        /* Stats */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-box {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .stat-icon-box {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #16a08520, #27ae6020);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #16a085;
+        }
+
+        .stat-info h3 {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .stat-info p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Main Action Button */
+        .main-action {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px dashed #16a085;
+        }
+
+        .main-action:hover {
+            transform: scale(1.02);
+            background: linear-gradient(135deg, #16a085, #27ae60);
+            color: white;
+        }
+
+        .main-action:hover .action-icon {
+            color: white;
+        }
+
+        .action-icon {
+            font-size: 80px;
+            color: #16a085;
+            margin-bottom: 20px;
+            transition: color 0.3s;
+        }
+
+        .action-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .action-subtitle {
+            font-size: 16px;
+            opacity: 0.8;
+        }
+
+        /* Tools Grid */
+        .section-title {
+            color: white;
+            margin: 30px 0 20px;
+            font-size: 24px;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(22,160,133,0.2);
+        }
+
+        .tool-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .tool-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .tool-category {
+            background: #16a08520;
+            color: #16a085;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 12px;
+        }
+
+        .tool-details {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .tool-detail {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .tool-status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-good {
+            background: #2ecc7120;
+            color: #2ecc71;
+        }
+
+        .status-warning {
+            background: #f39c1220;
+            color: #f39c12;
+        }
+
+        .tool-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .tool-btn {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-edit {
+            background: #16a08520;
+            color: #16a085;
+        }
+
+        .btn-edit:hover {
+            background: #16a085;
+            color: white;
+        }
+
+        .btn-history {
+            background: #3498db20;
+            color: #3498db;
+        }
+
+        .btn-history:hover {
+            background: #3498db;
+            color: white;
+        }
+
+        /* Registration Form */
+        .form-container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .form-title {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #16a085, #27ae60);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-area">
+                <i class="fas fa-tools" style="font-size: 24px; color: #16a085;"></i>
+                <span style="font-weight: 700; font-size: 20px;">Control de Herramientas</span>
+            </div>
+            <div class="user-badge">
+                <div style="width: 35px; height: 35px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #16a085; font-weight: 700;">OC</div>
+                <div>
+                    <div style="font-weight: 600;">Orlenny Cuello</div>
+                    <div style="font-size: 12px;">Organización de Herramientas</div>
+                </div>
+                <button onclick="logout()" style="background: none; border: none; color: white; font-size: 18px; cursor: pointer;">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard">
+        <div class="welcome-card">
+            <h1 style="font-size: 32px; margin-bottom: 10px;">Panel de Herramientas 🔧</h1>
+            <p style="font-size: 18px;">Gestión y control de herramientas y equipos</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-row">
+            <div class="stat-box">
+                <div class="stat-icon-box"><i class="fas fa-toolbox"></i></div>
+                <div class="stat-info">
+                    <h3>67</h3>
+                    <p>Total Herramientas</p>
+                </div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-icon-box"><i class="fas fa-check-circle"></i></div>
+                <div class="stat-info">
+                    <h3>52</h3>
+                    <p>En buen estado</p>
+                </div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-icon-box"><i class="fas fa-exclamation-triangle"></i></div>
+                <div class="stat-info">
+                    <h3>8</h3>
+                    <p>En mantenimiento</p>
+                </div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-icon-box"><i class="fas fa-clock"></i></div>
+                <div class="stat-info">
+                    <h3>12</h3>
+                    <p>Prestadas</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Action - Registrar Herramientas -->
+        <div class="main-action" onclick="showRegisterForm()">
+            <div class="action-icon">
+                <i class="fas fa-plus-circle"></i>
+            </div>
+            <h2 class="action-title">REGISTRAR NUEVA HERRAMIENTA</h2>
+            <p class="action-subtitle">Haz clic aquí para agregar herramientas al inventario</p>
+        </div>
+
+        <!-- Registration Form (hidden by default) -->
+        <div class="form-container" id="registerForm" style="display: none;">
+            <h3 class="form-title">
+                <i class="fas fa-tools" style="color: #16a085;"></i>
+                Registrar Nueva Herramienta
+            </h3>
+
+            <form id="toolForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Nombre de la herramienta *</label>
+                        <input type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Categoría *</label>
+                        <select required>
+                            <option value="">Seleccionar</option>
+                            <option value="manual">Herramienta Manual</option>
+                            <option value="electrica">Herramienta Eléctrica</option>
+                            <option value="medicion">Instrumento de Medición</option>
+                            <option value="seguridad">Equipo de Seguridad</option>
+                            <option value="especial">Herramienta Especializada</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Marca</label>
+                        <input type="text">
+                    </div>
+                    <div class="form-group">
+                        <label>Modelo</label>
+                        <input type="text">
+                    </div>
+                    <div class="form-group">
+                        <label>Número de serie</label>
+                        <input type="text">
+                    </div>
+                    <div class="form-group">
+                        <label>Cantidad *</label>
+                        <input type="number" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Ubicación *</label>
+                        <input type="text" placeholder="Ej: Estante 3, Caja #5, Panel A" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Estado *</label>
+                        <select required>
+                            <option value="nuevo">Nuevo</option>
+                            <option value="bueno">Buen estado</option>
+                            <option value="regular">Regular</option>
+                            <option value="mantenimiento">En mantenimiento</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Observaciones</label>
+                        <textarea rows="3"></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-save"></i> Registrar Herramienta
+                </button>
+            </form>
+        </div>
+
+        <!-- Tools List -->
+        <h2 class="section-title">
+            <i class="fas fa-list"></i> Herramientas Registradas
+        </h2>
+
+        <div class="tools-grid">
+            <!-- Herramienta 1 -->
+            <div class="tool-card">
+                <div class="tool-header">
+                    <span class="tool-name">Taladro Percutor</span>
+                    <span class="tool-category">Eléctrica</span>
+                </div>
+                <div class="tool-details">
+                    <div class="tool-detail">
+                        <i class="fas fa-tag"></i>
+                        <span>Bosch</span>
+                    </div>
+                    <div class="tool-detail">
+                        <i class="fas fa-hashtag"></i>
+                        <span>GBH 2-26</span>
+                    </div>
+                </div>
+                <div class="tool-details">
+                    <div class="tool-detail">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Panel A-3</span>
+                    </div>
+                    <div class="tool-detail">
+                        <i class="fas fa-cubes"></i>
+                        <span>3 unidades</span>
+                    </div>
+                </div>
+                <div style="margin: 10px 0;">
+                    <span class="tool-status status-good">Buen estado</span>
+                </div>
+                <div class="tool-actions">
+                    <button class="tool-btn btn-edit" onclick="editTool(1)">Editar</button>
+                    <button class="tool-btn btn-history" onclick="viewToolHistory(1)">Historial</button>
+                </div>
+            </div>
+
+            <!-- Herramienta 2 -->
+            <div class="tool-card">
+                <div class="tool-header">
+                    <span class="tool-name">Manómetro Digital</span>
+                    <span class="tool-category">Medición</span>
+                </div>
+                <div class="tool-details">
+                    <div class="tool-detail">
+                        <i class="fas fa-tag"></i>
+                        <span>Testo</span>
+                    </div>
+                    <div class="tool-detail">
+                        <i class="fas fa-hashtag"></i>
+                        <span>550s</span>
+                    </div>
+                </div>
+                <div class="tool-details">
+                    <div class="tool-detail">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Estante C-1</span>
+                    </div>
+                    <div class="tool-detail">
+                        <i class="fas fa-cubes"></i>
+                        <span>2 unidades</span>
+                    </div>
+                </div>
+                <div style="margin: 10px 0;">
+                    <span class="tool-status status-good">Buen estado</span>
+                </div>
+                <div class="tool-actions">
+                    <button class="tool-btn btn-edit" onclick="editTool(2)">Editar</button>
+                    <button class="tool-btn btn-history" onclick="viewToolHistory(2)">Historial</button>
+                </div>
+            </div>
+
+            <!-- Herramienta 3 -->
+            <div class="tool-card">
+                <div class="tool-header">
+                    <span class="tool-name">Bomba de Vacío</span>
+                    <span class="tool-category">Especializada</span>
+                </div>
+                <div class="tool-details">
+                    <div class="tool-detail">
+                        <i class="fas fa-tag"></i>
+                        <span>Robinair</span>
+                    </div>
+                    <div class="tool-detail">
+                        <i class="fas fa-hashtag"></i>
+                        <span>15300</span>
+                    </div>
+                </div>
+                <div class="tool-details">
+                    <div class="tool-detail">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Panel B-2</span>
+                    </div>
+                    <div class="tool-detail">
+                        <i class="fas fa-cubes"></i>
+                        <span>1 unidad</span>
+                    </div>
+                </div>
+                <div style="margin: 10px 0;">
+                    <span class="tool-status status-warning">En mantenimiento</span>
+                </div>
+                <div class="tool-actions">
+                    <button class="tool-btn btn-edit" onclick="editTool(3)">Editar</button>
+                    <button class="tool-btn btn-history" onclick="viewToolHistory(3)">Historial</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showRegisterForm() {
+            const form = document.getElementById('registerForm');
+            if (form.style.display === 'none') {
+                form.style.display = 'block';
+                form.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                form.style.display = 'none';
+            }
+        }
+
+        document.getElementById('toolForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showNotification('✅ Herramienta registrada exitosamente');
+            this.reset();
+            document.getElementById('registerForm').style.display = 'none';
+        });
+
+        function editTool(id) {
+            showNotification('✏️ Editando herramienta #' + id);
+        }
+
+        function viewToolHistory(id) {
+            showNotification('📜 Mostrando historial de herramienta #' + id);
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                background: #16a085;
+                color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                box-shadow: 0 10px 30px rgba(22,160,133,0.3);
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        function logout() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

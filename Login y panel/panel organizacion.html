@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrostControl - Organización Administrativa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #43a047 0%, #2e7d32 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .organizacion-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* HEADER */
+        .header-organizacion {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .user-organizacion {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .avatar-organizacion {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #43a047, #2e7d32);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px #c8e6c9;
+        }
+        
+        /* RESUMEN */
+        .resumen-organizacion {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .resumen-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            border-top: 5px solid #43a047;
+            transition: transform 0.3s;
+        }
+        
+        .resumen-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .resumen-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #e8f5e9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: #43a047;
+            font-size: 1.5rem;
+        }
+        
+        .resumen-valor {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 15px 0;
+            color: #2e7d32;
+        }
+        
+        .resumen-label {
+            color: #666;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* NAVEGACIÓN */
+        .nav-organizacion {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .tabs-organizacion {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .tab-organizacion {
+            padding: 12px 25px;
+            background: #f5f5f5;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        
+        .tab-organizacion:hover {
+            background: #e8f5e9;
+            color: #43a047;
+        }
+        
+        .tab-organizacion.active {
+            background: #43a047;
+            color: white;
+        }
+        
+        /* CONTENIDO */
+        .content-organizacion {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            display: none;
+        }
+        
+        .content-organizacion.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        /* CALENDARIO */
+        .calendario-container {
+            margin-top: 20px;
+        }
+        
+        .calendario-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .dias-semana {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .dia-semana {
+            text-align: center;
+            padding: 10px;
+            background: #e8f5e9;
+            border-radius: 8px;
+            font-weight: 600;
+            color: #2e7d32;
+        }
+        
+        .dias-mes {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+        
+        .dia-mes {
+            height: 80px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .dia-mes:hover {
+            border-color: #43a047;
+            background: #f1f8e9;
+        }
+        
+        .dia-mes.actual {
+            background: #43a047;
+            color: white;
+            border-color: #43a047;
+        }
+        
+        .dia-mes.evento {
+            border-color: #ff9800;
+            background: #fff3e0;
+        }
+        
+        /* TAREAS */
+        .tareas-container {
+            margin-top: 30px;
+        }
+        
+        .tarea-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 5px solid;
+            transition: all 0.3s;
+        }
+        
+        .tarea-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .tarea-card.pendiente {
+            border-color: #ff9800;
+        }
+        
+        .tarea-card.en-proceso {
+            border-color: #2196f3;
+        }
+        
+        .tarea-card.completada {
+            border-color: #4caf50;
+        }
+        
+        .tarea-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        
+        .tarea-titulo h3 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .tarea-prioridad {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .prioridad-alta {
+            background: #ffebee;
+            color: #c62828;
+        }
+        
+        .prioridad-media {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+        
+        .prioridad-baja {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        /* BOTONES */
+        .btn-organizacion {
+            padding: 12px 25px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        
+        .btn-organizacion.primary {
+            background: #43a047;
+            color: white;
+        }
+        
+        .btn-organizacion.secondary {
+            background: #607d8b;
+            color: white;
+        }
+        
+        .btn-organizacion.success {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .btn-organizacion:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @media (max-width: 768px) {
+            .header-organizacion {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .user-organizacion {
+                flex-direction: column;
+            }
+            
+            .tabs-organizacion {
+                flex-direction: column;
+            }
+            
+            .dias-semana,
+            .dias-mes {
+                grid-template-columns: repeat(7, 1fr);
+                font-size: 0.8rem;
+            }
+            
+            .dia-mes {
+                height: 60px;
+                padding: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="organizacion-container">
+        <!-- HEADER -->
+        <div class="header-organizacion">
+            <div class="user-organizacion">
+                <div class="avatar-organizacion">
+                    <i class="fas fa-clipboard-list"></i>
+                </div>
+                <div>
+                    <h2>Raynilda Rosario</h2>
+                    <p><i class="fas fa-briefcase"></i> Organización Administrativa</p>
+                    <p><i class="fas fa-calendar"></i> <span id="fecha-organizacion"></span></p>
+                </div>
+            </div>
+            
+            <div class="header-actions">
+                <button class="btn-organizacion primary" onclick="actualizarOrganizacion()">
+                    <i class="fas fa-sync-alt"></i> Actualizar
+                </button>
+                <button class="btn-organizacion secondary" onclick="cerrarSesion()" style="background: #f44336; margin-top: 10px;">
+                    <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                </button>
+            </div>
+        </div>
+        
+        <!-- RESUMEN -->
+        <div class="resumen-organizacion">
+            <div class="resumen-card">
+                <div class="resumen-icon">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <div class="resumen-valor" id="tareasPendientes">0</div>
+                <div class="resumen-label">Tareas Pendientes</div>
+            </div>
+            
+            <div class="resumen-card">
+                <div class="resumen-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="resumen-valor" id="empleadosActivos">17</div>
+                <div class="resumen-label">Empleados Activos</div>
+            </div>
+            
+            <div class="resumen-card">
+                <div class="resumen-icon">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="resumen-valor" id="eventosHoy">0</div>
+                <div class="resumen-label">Eventos Hoy</div>
+            </div>
+            
+            <div class="resumen-card">
+                <div class="resumen-icon">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <div class="resumen-valor" id="documentos">24</div>
+                <div class="resumen-label">Documentos</div>
+            </div>
+        </div>
+        
+        <!-- NAVEGACIÓN -->
+        <div class="nav-organizacion">
+            <div class="tabs-organizacion">
+                <button class="tab-organizacion active" onclick="mostrarSeccion('calendario')">
+                    <i class="fas fa-calendar-alt"></i> Calendario
+                </button>
+                <button class="tab-organizacion" onclick="mostrarSeccion('tareas')">
+                    <i class="fas fa-tasks"></i> Tareas
+                </button>
+                <button class="tab-organizacion" onclick="mostrarSeccion('documentos')">
+                    <i class="fas fa-folder"></i> Documentos
+                </button>
+                <button class="tab-organizacion" onclick="mostrarSeccion('empleados')">
+                    <i class="fas fa-user-tie"></i> Gestión Empleados
+                </button>
+                <button class="tab-organizacion" onclick="mostrarSeccion('reuniones')">
+                    <i class="fas fa-users"></i> Reuniones
+                </button>
+            </div>
+        </div>
+        
+        <!-- SECCIÓN CALENDARIO -->
+        <div id="seccionCalendario" class="content-organizacion active">
+            <div class="section-title" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                <h2 style="color: #43a047; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-calendar-alt"></i> Calendario Organizacional
+                </h2>
+                <div class="calendario-header">
+                    <button class="btn-organizacion primary" onclick="mesAnterior()">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h3 style="margin: 0 20px;" id="mesActual">Enero 2024</h3>
+                    <button class="btn-organizacion primary" onclick="mesSiguiente()">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="calendario-container">
+                <div class="dias-semana">
+                    <div class="dia-semana">Dom</div>
+                    <div class="dia-semana">Lun</div>
+                    <div class="dia-semana">Mar</div>
+                    <div class="dia-semana">Mié</div>
+                    <div class="dia-semana">Jue</div>
+                    <div class="dia-semana">Vie</div>
+                    <div class="dia-semana">Sáb</div>
+                </div>
+                
+                <div class="dias-mes" id="diasCalendario">
+                    <!-- Días del mes se cargan aquí -->
+                </div>
+            </div>
+            
+            <div class="eventos-hoy" style="margin-top: 30px; padding: 20px; background: #f1f8e9; border-radius: 10px;">
+                <h3 style="color: #2e7d32; margin-bottom: 15px;">
+                    <i class="fas fa-calendar-day"></i> Eventos para hoy
+                </h3>
+                <div id="listaEventosHoy">
+                    <!-- Eventos de hoy se cargan aquí -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- SECCIÓN TAREAS -->
+        <div id="seccionTareas" class="content-organizacion">
+            <div class="section-title" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                <h2 style="color: #43a047; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-tasks"></i> Gestión de Tareas
+                </h2>
+                <button class="btn-organizacion success" onclick="nuevaTarea()">
+                    <i class="fas fa-plus"></i> Nueva Tarea
+                </button>
+            </div>
+            
+            <div class="filtros-tareas" style="margin-bottom: 20px; display: flex; gap: 10px;">
+                <button class="btn-organizacion primary" onclick="filtrarTareas('todas')">
+                    Todas
+                </button>
+                <button class="btn-organizacion secondary" onclick="filtrarTareas('pendientes')">
+                    Pendientes
+                </button>
+                <button class="btn-organizacion success" onclick="filtrarTareas('completadas')">
+                    Completadas
+                </button>
+            </div>
+            
+            <div class="tareas-container" id="listaTareas">
+                <!-- Tareas se cargan aquí -->
+            </div>
+        </div>
+        
+        <!-- SECCIÓN DOCUMENTOS -->
+        <div id="seccionDocumentos" class="content-organizacion">
+            <div class="section-title" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                <h2 style="color: #43a047; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-folder"></i> Gestión Documental
+                </h2>
+                <button class="btn-organizacion primary" onclick="nuevoDocumento()">
+                    <i class="fas fa-upload"></i> Subir Documento
+                </button>
+            </div>
+            
+            <div class="categorias-documentos" style="margin-bottom: 25px;">
+                <h3 style="color: #666; margin-bottom: 15px;">Categorías</h3>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                    <button class="btn-organizacion secondary" onclick="filtrarDocumentos('todos')">
+                        Todos
+                    </button>
+                    <button class="btn-organizacion secondary" onclick="filtrarDocumentos('contratos')">
+                        Contratos
+                    </button>
+                    <button class="btn-organizacion secondary" onclick="filtrarDocumentos('financieros')">
+                        Financieros
+                    </button>
+                    <button class="btn-organizacion secondary" onclick="filtrarDocumentos('recursos-humanos')">
+                        Recursos Humanos
+                    </button>
+                    <button class="btn-organizacion secondary" onclick="filtrarDocumentos('operaciones')">
+                        Operaciones
+                    </button>
+                </div>
+            </div>
+            
+            <div class="documentos-list" id="listaDocumentos">
+                <!-- Documentos se cargan aquí -->
+            </div>
+        </div>
+        
+        <!-- SECCIÓN EMPLEADOS -->
+        <div id="seccionEmpleados" class="content-organizacion">
+            <div class="section-title" style="margin-bottom: 25px;">
+                <h2 style="color: #43a047; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-user-tie"></i> Gestión de Personal
+                </h2>
+                <p style="color: #666; margin-top: 10px;">Administración de información del personal de FrostControl</p>
+            </div>
+            
+            <div class="empleados-stats" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                <div class="stat-empleado" style="background: #e8f5e9; padding: 20px; border-radius: 10px; text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: 700; color: #2e7d32;">4</div>
+                    <div style="color: #666; font-size: 0.9rem;">Brigada Reparación</div>
+                </div>
+                <div class="stat-empleado" style="background: #e3f2fd; padding: 20px; border-radius: 10px; text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: 700; color: #1976d2;">5</div>
+                    <div style="color: #666; font-size: 0.9rem;">Brigada Finanzas</div>
+                </div>
+                <div class="stat-empleado" style="background: #fff3e0; padding: 20px; border-radius: 10px; text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: 700; color: #f57c00;">5</div>
+                    <div style="color: #666; font-size: 0.9rem;">Brigada Ventas</div>
+                </div>
+                <div class="stat-empleado" style="background: #f3e5f5; padding: 20px; border-radius: 10px; text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: 700; color: #7b1fa2;">3</div>
+                    <div style="color: #666; font-size: 0.9rem;">Brigada Logística</div>
+                </div>
+            </div>
+            
+            <div id="infoEmpleados">
+                <!-- Información de empleados -->
+            </div>
+        </div>
+        
+        <!-- SECCIÓN REUNIONES -->
+        <div id="seccionReuniones" class="content-organizacion">
+            <div class="section-title" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                <h2 style="color: #43a047; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-users"></i> Gestión de Reuniones
+                </h2>
+                <button class="btn-organizacion primary" onclick="nuevaReunion()">
+                    <i class="fas fa-plus"></i> Programar Reunión
+                </button>
+            </div>
+            
+            <div class="reuniones-container" id="listaReuniones">
+                <!-- Reuniones se cargan aquí -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mostrar fecha
+            const fecha = new Date();
+            document.getElementById('fecha-organizacion').textContent = fecha.toLocaleDateString('es-DO');
+            
+            // Cargar datos iniciales
+            cargarCalendario();
+            cargarTareas();
+            cargarDocumentos();
+            cargarReuniones();
+        });
+        
+        // Navegación
+        function mostrarSeccion(seccion) {
+            // Ocultar todas las secciones
+            document.querySelectorAll('.content-organizacion').forEach(sec => {
+                sec.classList.remove('active');
+            });
+            
+            // Desactivar todos los tabs
+            document.querySelectorAll('.tab-organizacion').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Mostrar sección seleccionada
+            document.getElementById(`seccion${capitalize(seccion)}`).classList.add('active');
+            
+            // Activar tab correspondiente
+            const tabs = document.querySelectorAll('.tab-organizacion');
+            for (let tab of tabs) {
+                if (tab.textContent.includes(capitalize(seccion))) {
+                    tab.classList.add('active');
+                    break;
+                }
+            }
+        }
+        
+        // Calendario
+        let mesActual = new Date().getMonth();
+        let añoActual = new Date().getFullYear();
+        
+        function cargarCalendario() {
+            const nombresMeses = [
+                'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+            ];
+            
+            document.getElementById('mesActual').textContent = `${nombresMeses[mesActual]} ${añoActual}`;
+            
+            const primerDia = new Date(añoActual, mesActual, 1);
+            const ultimoDia = new Date(añoActual, mesActual + 1, 0);
+            const diasEnMes = ultimoDia.getDate();
+            const primerDiaSemana = primerDia.getDay();
+            
+            let html = '';
+            
+            // Días vacíos al inicio
+            for (let i = 0; i < primerDiaSemana; i++) {
+                html += '<div class="dia-mes" style="visibility: hidden;"></div>';
+            }
+            
+            // Días del mes
+            const hoy = new Date();
+            for (let dia = 1; dia <= diasEnMes; dia++) {
+                const fechaActual = new Date(añoActual, mesActual, dia);
+                const esHoy = hoy.getDate() === dia && hoy.getMonth() === mesActual && hoy.getFullYear() === añoActual;
+                const tieneEvento = dia === 15 || dia === 20; // Simulación de eventos
+                
+                let clase = 'dia-mes';
+                if (esHoy) clase += ' actual';
+                if (tieneEvento) clase += ' evento';
+                
+                html += `<div class="${clase}" onclick="verDia(${dia})">${dia}</div>`;
+            }
+            
+            document.getElementById('diasCalendario').innerHTML = html;
+            
+            // Cargar eventos de hoy
+            cargarEventosHoy();
+        }
+        
+        function mesAnterior() {
+            mesActual--;
+            if (mesActual < 0) {
+                mesActual = 11;
+                añoActual--;
+            }
+            cargarCalendario();
+        }
+        
+        function mesSiguiente() {
+            mesActual++;
+            if (mesActual > 11) {
+                mesActual = 0;
+                añoActual++;
+            }
+            cargarCalendario();
+        }
+        
+        function verDia(dia) {
+            alert(`Ver eventos del día ${dia}/${mesActual + 1}/${añoActual}`);
+        }
+        
+        function cargarEventosHoy() {
+            const eventos = [
+                { hora: '09:00', descripcion: 'Reunión brigada reparación', lugar: 'Sala de reuniones' },
+                { hora: '14:00', descripcion: 'Revisión de inventario', lugar: 'Almacén' },
+                { hora: '16:30', descripcion: 'Entrega de reportes', lugar: 'Oficina finanzas' }
+            ];
+            
+            let html = '';
+            eventos.forEach(evento => {
+                html += `
+                    <div style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #43a047;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <strong style="color: #333;">${evento.hora}</strong>
+                                <p style="margin: 5px 0; color: #666;">${evento.descripcion}</p>
+                                <p style="color: #999; font-size: 0.9rem;"><i class="fas fa-map-marker-alt"></i> ${evento.lugar}</p>
+                            </div>
+                            <button class="btn-organizacion primary" style="padding: 8px 12px;">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('listaEventosHoy').innerHTML = html;
+            document.getElementById('eventosHoy').textContent = eventos.length;
+        }
+        
+        // Tareas
+        async function cargarTareas() {
+            const container = document.getElementById('listaTareas');
+            
+            const tareas = [
+                {
+                    id: 1,
+                    titulo: 'Actualizar base de datos de empleados',
+                    descripcion: 'Verificar y actualizar información personal de todos los empleados',
+                    asignadaA: 'Raynilda Rosario',
+                    fechaVencimiento: '2024-01-20',
+                    prioridad: 'alta',
+                    estado: 'pendiente'
+                },
+                {
+                    id: 2,
+                    titulo: 'Preparar agenda semanal',
+                    descripcion: 'Organizar reuniones y actividades para la próxima semana',
+                    asignadaA: 'Raynilda Rosario',
+                    fechaVencimiento: '2024-01-19',
+                    prioridad: 'media',
+                    estado: 'en-proceso'
+                },
+                {
+                    id: 3,
+                    titulo: 'Archivar documentos del mes',
+                    descripcion: 'Digitalizar y archivar documentos administrativos',
+                    asignadaA: 'Raynilda Rosario',
+                    fechaVencimiento: '2024-01-18',
+                    prioridad: 'baja',
+                    estado: 'completada'
+                }
+            ];
+            
+            let html = '';
+            let pendientes = 0;
+            
+            tareas.forEach(tarea => {
+                if (tarea.estado === 'pendiente') pendientes++;
+                
+                html += `
+                    <div class="tarea-card ${tarea.estado}">
+                        <div class="tarea-header">
+                            <div class="tarea-titulo">
+                                <h3>${tarea.titulo}</h3>
+                                <p style="color: #666; font-size: 0.9rem;">
+                                    <i class="fas fa-user"></i> ${tarea.asignadaA} | 
+                                    <i class="fas fa-calendar"></i> ${tarea.fechaVencimiento}
+                                </p>
+                            </div>
+                            <div class="tarea-prioridad prioridad-${tarea.prioridad}">
+                                ${tarea.prioridad === 'alta' ? 'ALTA' : tarea.prioridad === 'media' ? 'MEDIA' : 'BAJA'}
+                            </div>
+                        </div>
+                        
+                        <p style="color: #666; margin-bottom: 15px;">${tarea.descripcion}</p>
+                        
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn-organizacion primary" onclick="editarTarea(${tarea.id})" style="padding: 8px 15px;">
+                                <i class="fas fa-edit"></i> Editar
+                            </button>
+                            <button class="btn-organizacion success" onclick="completarTarea(${tarea.id})" style="padding: 8px 15px;">
+                                <i class="fas fa-check"></i> Completar
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            document.getElementById('tareasPendientes').textContent = pendientes;
+        }
+        
+        // Funciones de utilidad
+        function capitalize(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+        
+        // Funciones de acción
+        function actualizarOrganizacion() {
+            alert('Actualizando información organizacional...');
+            cargarCalendario();
+            cargarTareas();
+        }
+        
+        function nuevaTarea() {
+            alert('Creando nueva tarea administrativa...');
+        }
+        
+        function filtrarTareas(filtro) {
+            alert(`Filtrando tareas por: ${filtro}`);
+        }
+        
+        function editarTarea(id) {
+            alert(`Editando tarea ID: ${id}`);
+        }
+        
+        function completarTarea(id) {
+            if (confirm('¿Marcar esta tarea como completada?')) {
+                alert(`Tarea ${id} marcada como completada`);
+                cargarTareas();
+            }
+        }
+        
+        function cargarDocumentos() {
+            // Simulación de carga de documentos
+        }
+        
+        function nuevoDocumento() {
+            alert('Subiendo nuevo documento...');
+        }
+        
+        function filtrarDocumentos(categoria) {
+            alert(`Filtrando documentos por: ${categoria}`);
+        }
+        
+        function nuevaReunion() {
+            alert('Programando nueva reunión...');
+        }
+        
+        function cargarReuniones() {
+            // Simulación de carga de reuniones
+        }
+        
+        function cerrarSesion() {
+            if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                window.location.href = 'login.html';
+            }
+        }
+    </script>
+</body>
+</html>

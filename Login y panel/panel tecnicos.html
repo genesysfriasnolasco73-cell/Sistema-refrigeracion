@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrostControl - Panel de Técnico</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ESTILOS GENERALES - Similar al panel anterior pero con colores diferentes */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1976d2 0%, #0d47a1 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .tecnico-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* HEADER DEL TÉCNICO */
+        .tecnico-header {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1976d2, #0d47a1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px #e3f2fd;
+        }
+        
+        .user-details h2 {
+            color: #1976d2;
+            margin-bottom: 5px;
+        }
+        
+        .user-details p {
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* ESTADÍSTICAS PERSONALES */
+        .personal-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .personal-stat {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            border-top: 4px solid #1976d2;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1976d2;
+            margin: 10px 0;
+        }
+        
+        /* TRABAJOS ASIGNADOS */
+        .trabajos-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e3f2fd;
+        }
+        
+        .section-header h2 {
+            color: #1976d2;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .refresh-btn {
+            background: #1976d2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+        
+        /* LISTA DE TRABAJOS */
+        .trabajos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        
+        .trabajo-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 5px solid;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .trabajo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .trabajo-card.pendiente {
+            border-color: #ff9800;
+        }
+        
+        .trabajo-card.proceso {
+            border-color: #1976d2;
+        }
+        
+        .trabajo-card.urgente {
+            border-color: #f44336;
+        }
+        
+        .trabajo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .cliente-info h3 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .cliente-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .trabajo-prioridad {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background: #ffeb3b;
+            color: #856404;
+        }
+        
+        .trabajo-detalles {
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .detalle {
+            margin-bottom: 10px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .detalle i {
+            color: #1976d2;
+            width: 20px;
+        }
+        
+        /* ACCIONES RÁPIDAS */
+        .acciones-rapidas {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .btn-accion {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            flex: 1;
+            min-width: 150px;
+            justify-content: center;
+        }
+        
+        .btn-salida {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .btn-materiales {
+            background: #ff9800;
+            color: white;
+        }
+        
+        .btn-completar {
+            background: #2196f3;
+            color: white;
+        }
+        
+        .btn-llamar {
+            background: #9c27b0;
+            color: white;
+        }
+        
+        .btn-accion:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        
+        /* MODAL DE INFORMAR SALIDA */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+        
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to right, #1976d2, #0d47a1);
+            color: white;
+            border-radius: 15px 15px 0 0;
+        }
+        
+        .modal-body {
+            padding: 25px;
+        }
+        
+        .info-cliente {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .opciones-contacto {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .opcion-contacto {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .opcion-contacto:hover {
+            background: #e3f2fd;
+            transform: translateX(5px);
+        }
+        
+        .opcion-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #1976d2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .opcion-text h4 {
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .opcion-text p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .tecnico-header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .user-profile {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .trabajos-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .acciones-rapidas {
+                flex-direction: column;
+            }
+            
+            .btn-accion {
+                width: 100%;
+            }
+        }
+        
+        /* ANIMACIONES */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="tecnico-container">
+        <!-- HEADER DEL TÉCNICO -->
+        <div class="tecnico-header">
+            <div class="user-profile">
+                <div class="user-avatar" id="tecnicoAvatar">
+                    <i class="fas fa-user-cog"></i>
+                </div>
+                <div class="user-details">
+                    <h2 id="tecnicoNombre">Cargando...</h2>
+                    <p><i class="fas fa-briefcase"></i> <span id="tecnicoRol">Técnico de Reparación</span></p>
+                    <p><i class="fas fa-id-badge"></i> ID: <span id="tecnicoId">TEC-001</span></p>
+                </div>
+            </div>
+            
+            <div class="header-actions">
+                <button class="refresh-btn" onclick="cargarMisTrabajos()">
+                    <i class="fas fa-sync-alt"></i> Actualizar
+                </button>
+                <button class="refresh-btn" onclick="cerrarSesion()" style="background: #f44336; margin-top: 10px;">
+                    <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                </button>
+            </div>
+        </div>
+        
+        <!-- ESTADÍSTICAS PERSONALES -->
+        <div class="personal-stats">
+            <div class="personal-stat">
+                <div class="stat-label">Trabajos Hoy</div>
+                <div class="stat-value" id="trabajosHoy">0</div>
+            </div>
+            
+            <div class="personal-stat">
+                <div class="stat-label">En Proceso</div>
+                <div class="stat-value" id="enProceso">0</div>
+            </div>
+            
+            <div class="personal-stat">
+                <div class="stat-label">Completados</div>
+                <div class="stat-value" id="completados">0</div>
+            </div>
+            
+            <div class="personal-stat">
+                <div class="stat-label">Calificación</div>
+                <div class="stat-value" id="calificacion">4.8</div>
+            </div>
+        </div>
+        
+        <!-- TRABAJOS ASIGNADOS -->
+        <div class="trabajos-section">
+            <div class="section-header">
+                <h2><i class="fas fa-tasks"></i> Mis Trabajos Asignados</h2>
+                <button class="refresh-btn" onclick="cargarMisTrabajos()">
+                    <i class="fas fa-sync-alt"></i> Actualizar Lista
+                </button>
+            </div>
+            
+            <div class="trabajos-grid" id="misTrabajos">
+                <!-- Trabajos se cargan aquí dinámicamente -->
+            </div>
+        </div>
+        
+        <!-- ACCIONES RÁPIDAS -->
+        <div class="trabajos-section">
+            <div class="section-header">
+                <h2><i class="fas fa-bolt"></i> Acciones Rápidas</h2>
+            </div>
+            
+            <div class="acciones-rapidas">
+                <button class="btn-accion btn-salida" onclick="informarSalidaGlobal()">
+                    <i class="fas fa-car"></i> Informar Salida
+                </button>
+                
+                <button class="btn-accion btn-materiales" onclick="verMaterialesGlobal()">
+                    <i class="fas fa-box-open"></i> Ver Materiales
+                </button>
+                
+                <button class="btn-accion btn-completar" onclick="completarGlobal()">
+                    <i class="fas fa-check-circle"></i> Completar Trabajo
+                </button>
+                
+                <button class="btn-accion btn-llamar" onclick="llamarServicioCliente()">
+                    <i class="fas fa-phone"></i> Llamar Servicio Cliente
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MODAL DE INFORMAR SALIDA -->
+    <div id="modalSalida" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-car"></i> Informar Salida a Servicio</h3>
+                <button class="close-modal" onclick="cerrarModal()">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="info-cliente">
+                    <h4>Cliente: <span id="modalClienteNombre">Juan Pérez</span></h4>
+                    <p><i class="fas fa-map-marker-alt"></i> <span id="modalClienteDireccion">Calle Principal #123</span></p>
+                    <p><i class="fas fa-phone"></i> <span id="modalClienteTelefono">809-555-1234</span></p>
+                    <p><i class="fas fa-tools"></i> <span id="modalServicio">Reparación de nevera</span></p>
+                </div>
+                
+                <p style="margin-bottom: 20px; color: #666;">
+                    Al confirmar, se notificará automáticamente a Servicio al Cliente que has salido a realizar este servicio.
+                </p>
+                
+                <div class="opciones-contacto">
+                    <div class="opcion-contacto" onclick="confirmarSalida()">
+                        <div class="opcion-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="opcion-text">
+                            <h4>Confirmar Salida</h4>
+                            <p>Notificar que has salido al servicio</p>
+                        </div>
+                    </div>
+                    
+                    <div class="opcion-contacto" onclick="llamarServicioCliente()">
+                        <div class="opcion-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div class="opcion-text">
+                            <h4>Llamar a Servicio al Cliente</h4>
+                            <p>Comunicarse para dar información adicional</p>
+                        </div>
+                    </div>
+                    
+                    <div class="opcion-contacto" onclick="enviarMensajeCliente()">
+                        <div class="opcion-icon">
+                            <i class="fas fa-comment-alt"></i>
+                        </div>
+                        <div class="opcion-text">
+                            <h4>Contactar al Cliente</h4>
+                            <p>Enviar mensaje al cliente directamente</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MODAL DE MATERIALES -->
+    <div id="modalMateriales" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-box-open"></i> Materiales a Utilizar</h3>
+                <button class="close-modal" onclick="cerrarModal()">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <div id="listaMaterialesDetalle">
+                    <!-- Materiales se cargan aquí -->
+                </div>
+                
+                <div class="acciones-rapidas" style="margin-top: 20px;">
+                    <button class="btn-accion btn-materiales" onclick="solicitarMaterial()">
+                        <i class="fas fa-plus"></i> Solicitar Material
+                    </button>
+                    <button class="btn-accion btn-completar" onclick="verInventarioCompleto()">
+                        <i class="fas fa-clipboard-list"></i> Ver Inventario
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Configuración según el técnico
+        const tecnicos = {
+            'diamond': {
+                nombre: 'Diamond Antigua',
+                avatar: '<i class="fas fa-user-cog"></i>',
+                id: 'TEC-001',
+                color: '#2196f3'
+            },
+            'marcos': {
+                nombre: 'Marcos Nolasco',
+                avatar: '<i class="fas fa-user-cog"></i>',
+                id: 'TEC-002',
+                color: '#4caf50'
+            },
+            'radelfy': {
+                nombre: 'Radelfy De La Cruz',
+                avatar: '<i class="fas fa-user-cog"></i>',
+                id: 'TEC-003',
+                color: '#ff9800'
+            }
+        };
+        
+        let tecnicoActual = 'diamond'; // Esto vendría del login
+        let trabajoSeleccionado = null;
+        
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            // Obtener técnico del localStorage o URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const user = urlParams.get('user') || localStorage.getItem('tecnico_user') || 'diamond';
+            tecnicoActual = user;
+            
+            // Configurar perfil
+            configurarPerfil();
+            
+            // Cargar trabajos
+            cargarMisTrabajos();
+            cargarEstadisticas();
+        });
+        
+        function configurarPerfil() {
+            const tecnico = tecnicos[tecnicoActual];
+            document.getElementById('tecnicoNombre').textContent = tecnico.nombre;
+            document.getElementById('tecnicoId').textContent = tecnico.id;
+            document.getElementById('tecnicoAvatar').innerHTML = tecnico.avatar;
+            document.getElementById('tecnicoAvatar').style.background = `linear-gradient(135deg, ${tecnico.color}, ${oscurecerColor(tecnico.color)})`;
+            
+            // Guardar en localStorage
+            localStorage.setItem('tecnico_user', tecnicoActual);
+        }
+        
+        // Cargar trabajos del técnico
+        async function cargarMisTrabajos() {
+            const container = document.getElementById('misTrabajos');
+            container.innerHTML = '<p style="text-align: center; padding: 40px; color: #666;">Cargando trabajos...</p>';
+            
+            // Simulación de datos
+            setTimeout(() => {
+                const trabajos = [
+                    {
+                        id: 1,
+                        cliente: 'Juan Pérez',
+                        telefono: '809-555-1234',
+                        direccion: 'Calle Principal #123, Santo Domingo',
+                        servicio: 'Reparación de nevera',
+                        descripcion: 'Nevera no enfría, posible problema en el compresor',
+                        fecha: 'Hoy, 10:00 AM',
+                        estado: 'pendiente',
+                        prioridad: 'Normal',
+                        materiales: ['Compresor 1/4 HP', 'Gas R-410A', 'Aceite lubricante']
+                    },
+                    {
+                        id: 2,
+                        cliente: 'María Rodríguez',
+                        telefono: '809-555-5678',
+                        direccion: 'Av. Independencia #456, Santiago',
+                        servicio: 'Mantenimiento de aire acondicionado',
+                        descripcion: 'Limpieza y revisión general del sistema',
+                        fecha: 'Hoy, 2:00 PM',
+                        estado: 'asignado',
+                        prioridad: 'Alta',
+                        materiales: ['Filtros de repuesto', 'Limpia bobinas', 'Aceite']
+                    },
+                    {
+                        id: 3,
+                        cliente: 'Carlos García',
+                        telefono: '809-555-9012',
+                        direccion: 'Sector Los Jardines #789',
+                        servicio: 'Instalación de split',
+                        descripcion: 'Instalación nueva de sistema split 12,000 BTU',
+                        fecha: 'Mañana, 9:00 AM',
+                        estado: 'pendiente',
+                        prioridad: 'Normal',
+                        materiales: ['Split 12K BTU', 'Tubería de cobre', 'Aislante']
+                    }
+                ];
+                
+                let html = '';
+                trabajos.forEach(trabajo => {
+                    const estadoClass = trabajo.estado === 'pendiente' ? 'pendiente' : 
+                                      trabajo.prioridad === 'Alta' ? 'urgente' : 'proceso';
+                    
+                    html += `
+                        <div class="trabajo-card ${estadoClass}" data-id="${trabajo.id}">
+                            <div class="trabajo-header">
+                                <div class="cliente-info">
+                                    <h3>${trabajo.cliente}</h3>
+                                    <p><i class="fas fa-phone"></i> ${trabajo.telefono}</p>
+                                </div>
+                                <div class="trabajo-prioridad">
+                                    ${trabajo.prioridad}
+                                </div>
+                            </div>
+                            
+                            <div class="trabajo-detalles">
+                                <div class="detalle">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>${trabajo.direccion}</span>
+                                </div>
+                                <div class="detalle">
+                                    <i class="fas fa-tools"></i>
+                                    <span>${trabajo.servicio}</span>
+                                </div>
+                                <div class="detalle">
+                                    <i class="fas fa-calendar"></i>
+                                    <span>${trabajo.fecha}</span>
+                                </div>
+                                <div class="detalle">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>${trabajo.descripcion}</span>
+                                </div>
+                            </div>
+                            
+                            <div class="acciones-rapidas">
+                                <button class="btn-accion btn-salida" onclick="informarSalida(${trabajo.id})">
+                                    <i class="fas fa-car"></i> Salida
+                                </button>
+                                
+                                <button class="btn-accion btn-materiales" onclick="verMateriales(${trabajo.id})">
+                                    <i class="fas fa-box-open"></i> Materiales
+                                </button>
+                                
+                                <button class="btn-accion btn-completar" onclick="completarTrabajo(${trabajo.id})">
+                                    <i class="fas fa-check-circle"></i> Completar
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                container.innerHTML = html || '<p style="text-align: center; padding: 40px; color: #666;">No tienes trabajos asignados</p>';
+            }, 1000);
+        }
+        
+        // Funciones de acciones
+        function informarSalida(trabajoId) {
+            trabajoSeleccionado = trabajoId;
+            
+            // Obtener datos del trabajo (simulado)
+            const trabajo = {
+                cliente: 'Juan Pérez',
+                direccion: 'Calle Principal #123',
+                telefono: '809-555-1234',
+                servicio: 'Reparación de nevera'
+            };
+            
+            // Actualizar modal
+            document.getElementById('modalClienteNombre').textContent = trabajo.cliente;
+            document.getElementById('modalClienteDireccion').textContent = trabajo.direccion;
+            document.getElementById('modalClienteTelefono').textContent = trabajo.telefono;
+            document.getElementById('modalServicio').textContent = trabajo.servicio;
+            
+            // Mostrar modal
+            document.getElementById('modalSalida').style.display = 'flex';
+        }
+        
+        function confirmarSalida() {
+            const tecnico = tecnicos[tecnicoActual].nombre;
+            alert(`✅ ${tecnico} ha informado salida al servicio\n\nNotificación enviada a Servicio al Cliente`);
+            cerrarModal();
+            
+            // Actualizar estado del trabajo
+            const trabajoElement = document.querySelector(`[data-id="${trabajoSeleccionado}"]`);
+            if (trabajoElement) {
+                trabajoElement.classList.remove('pendiente');
+                trabajoElement.classList.add('proceso');
+                trabajoElement.querySelector('.trabajo-prioridad').textContent = 'En Proceso';
+            }
+        }
+        
+        function verMateriales(trabajoId) {
+            trabajoSeleccionado = trabajoId;
+            
+            // Materiales simulados
+            const materiales = [
+                { nombre: 'Compresor 1/4 HP', cantidad: '1 unidad' },
+                { nombre: 'Gas refrigerante R-410A', cantidad: '2 libras' },
+                { nombre: 'Aceite lubricante', cantidad: '500 ml' },
+                { nombre: 'Filtro deshidratador', cantidad: '1 unidad' },
+                { nombre: 'Tubería de cobre 1/4"', cantidad: '3 metros' }
+            ];
+            
+            let html = '<h4 style="margin-bottom: 15px;">Materiales necesarios:</h4>';
+            html += '<div style="background: #f8f9fa; padding: 15px; border-radius: 10px;">';
+            
+            materiales.forEach(mat => {
+                html += `
+                    <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee;">
+                        <span>${mat.nombre}</span>
+                        <strong>${mat.cantidad}</strong>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            html += '<p style="margin-top: 15px; color: #666; font-size: 0.9rem;">';
+            html += '<i class="fas fa-info-circle"></i> Estos materiales están disponibles en el inventario';
+            html += '</p>';
+            
+            document.getElementById('listaMaterialesDetalle').innerHTML = html;
+            document.getElementById('modalMateriales').style.display = 'flex';
+        }
+        
+        function llamarServicioCliente() {
+            const numero = '+1 (829) 123-4567';
+            const confirmacion = confirm(`Llamar a Servicio al Cliente:\n${numero}\n\n¿Continuar?`);
+            
+            if (confirmacion) {
+                alert(`Llamando a ${numero}...\n\nEn un dispositivo móvil, esto abrirá la aplicación de llamadas.`);
+                // Para dispositivos móviles
+                window.location.href = `tel:${numero.replace(/\D/g, '')}`;
+            }
+        }
+        
+        function enviarMensajeCliente() {
+            const numeroCliente = document.getElementById('modalClienteTelefono').textContent;
+            const mensaje = encodeURIComponent(`Hola, soy ${tecnicos[tecnicoActual].nombre} de FrostControl. Estoy en camino a su domicilio para realizar el servicio. Llegaré en aproximadamente 20 minutos.`);
+            
+            alert(`Preparando mensaje para el cliente...\n\nPuedes escribirle directamente al: ${numeroCliente}`);
+            // Para WhatsApp
+            window.open(`https://wa.me/${numeroCliente.replace(/\D/g, '')}?text=${mensaje}`, '_blank');
+        }
+        
+        function completarTrabajo(trabajoId) {
+            if (confirm('¿Marcar este trabajo como completado?')) {
+                alert('✅ Trabajo marcado como completado\n\nSe ha registrado en el sistema.');
+                
+                // Remover trabajo de la lista
+                const trabajoElement = document.querySelector(`[data-id="${trabajoId}"]`);
+                if (trabajoElement) {
+                    trabajoElement.style.opacity = '0.5';
+                    trabajoElement.style.pointerEvents = 'none';
+                }
+                
+                // Actualizar estadísticas
+                cargarEstadisticas();
+            }
+        }
+        
+        // Funciones de utilidad
+        function cargarEstadisticas() {
+            // Simulación de estadísticas
+            document.getElementById('trabajosHoy').textContent = '3';
+            document.getElementById('enProceso').textContent = '1';
+            document.getElementById('completados').textContent = '2';
+        }
+        
+        function oscurecerColor(color) {
+            // Función para oscurecer color
+            return color.replace(')', ', 0.8)').replace('rgb', 'rgba');
+        }
+        
+        function cerrarModal() {
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.style.display = 'none';
+            });
+        }
+        
+        function cerrarSesion() {
+            if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                localStorage.removeItem('tecnico_user');
+                window.location.href = 'login.html';
+            }
+        }
+        
+        // Funciones globales
+        function informarSalidaGlobal() {
+            alert('Selecciona un trabajo de la lista para informar salida');
+        }
+        
+        function verMaterialesGlobal() {
+            alert('Selecciona un trabajo de la lista para ver materiales');
+        }
+        
+        function completarGlobal() {
+            alert('Selecciona un trabajo de la lista para completar');
+        }
+        
+        function solicitarMaterial() {
+            alert('Funcionalidad: Solicitar material adicional del inventario');
+        }
+        
+        function verInventarioCompleto() {
+            alert('Funcionalidad: Ver inventario completo de materiales');
+        }
+        
+        // Cerrar modal al hacer clic fuera
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                cerrarModal();
+            }
+        };
+    </script>
+</body>
+</html>
